@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   # root "articles#index"
   # get '/hello', to: 'application#hello_world'
 
+  post '/login', to: "sessions#login"
+  get "/me", to: "users#show"
+  delete 'logout', to: "sessions#logout"
+
   get '*path',
       to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }

@@ -1,26 +1,41 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import ItemList from './ItemList';
+import Header from './Header';
+import Login from './Login';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [itemsArr, setItemsArr] = useState([]);
+  const [user, setUser] = useState()
 
   useEffect(() => {
-    fetch("/hello")
+    fetch("/me")
       .then((r) => r.json())
-      .then((data) => setCount(data.count));
+      .then((data) => setUser(data));
   }, []);
+
+  useEffect(() => {
+    fetch("/items")
+      .then((r) => r.json())
+      .then((data) => setItemsArr(data));
+  }, []);
+
+  function handleLogout(){
+    fetch("/logout", {
+      method: "DELETE",
+    }).then(() => setUser(null));
+  }
 
   return (
     <BrowserRouter>
       <div className="App">
+        <Header user={user} handleLogout={handleLogout}/>
+        <Login setUser={setUser}/>
+        {user? <h1>{user.username}</h1> : <h1>NOt logged in</h1>}
         <Switch>
-          <Route path="/testing">
-            <h1>Test Route</h1>
-          </Route>
-          <Route path="/">
-            <h1>Page Count: {count}</h1>
-          </Route>
+          <ItemList itemsArr={itemsArr}/>
+          
         </Switch>
       </div>
     </BrowserRouter>

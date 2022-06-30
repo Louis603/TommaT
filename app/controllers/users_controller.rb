@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
     def show
-        user = User.find(params[:id])
-        render json: user, status: :ok
+        user = User.find(session[:user_id])
+        if user
+            render json: user, status: :ok
+        else
+            render json: { error: "not singed in" }, status: :unauthorized
+        end
     end
 
     def index
@@ -11,6 +15,7 @@ class UsersController < ApplicationController
 
     def create
         user = User.create!(user_params)
+        session[:user_id] = user.id
         render json: user, status: :created
     end
 

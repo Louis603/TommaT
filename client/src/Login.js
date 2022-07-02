@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 
-function Login({setUser}) {
+function Login({setUser, setUserData}) {
     const [form, setForm] = useState({
         username: "",
         password: ""
@@ -15,14 +15,21 @@ function Login({setUser}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form)
         }).then(res => res.json())
-          .then(data => setUser(data))
+          .then(data => {
+            setUser(data)
+            setUserData(data)
+            setForm({
+                username: "",
+                password: ""
+            })
+          })
     }
 
     function handleChange(e){
         setForm({...form, [e.target.name]:e.target.value})
     }
   return (
-    <div>
+    <div> Login
         <form onSubmit={handleSubmit}>
             <label>
                 Username

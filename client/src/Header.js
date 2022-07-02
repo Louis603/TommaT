@@ -13,7 +13,13 @@ function Header({user, handleLogout }) {
             <NavLink to='/' style={link}><b>Home</b></NavLink>
         </ul>
         <ul>
-            <NavLink to='/new_marker' style={link}><b>Add New</b></NavLink>
+            <NavLink to='/new_item' style={link}><b>Add New</b></NavLink>
+        </ul>
+        <ul>
+            <NavLink to='/self' style={link}><b>Profile</b></NavLink>
+        </ul>
+        <ul>
+            <NavLink to='/cart' style={link}><b>Cart</b></NavLink>
         </ul>
         {/* {user? (
           null

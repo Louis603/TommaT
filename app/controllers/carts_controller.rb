@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
 
     def show
-        cart = find_cart
+        cart = Cart.where(user_id:params[:id])
         render json: cart, status: :ok
     end
 

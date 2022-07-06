@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post '/login', to: "sessions#login"
   get "/me", to: "users#show"
   delete 'logout', to: "sessions#logout"
+  delete "empty_cart/:id", to: "order_numbers#empty_cart"
 
   get '*path',
       to: 'fallback#index',

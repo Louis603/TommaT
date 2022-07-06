@@ -6,7 +6,6 @@ class ItemTagsController < ApplicationController
     end
     
     def create
-        byebug
         item_tag = ItemTag.create!(item_tag_params)
         render json: item_tag, status: :created
     end

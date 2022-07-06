@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useHistory } from "react-router-dom"
 
 
 function Login({setUser, setUserData}) {
@@ -6,6 +7,7 @@ function Login({setUser, setUserData}) {
         username: "",
         password: ""
     })
+    let history = useHistory()
 
     function handleSubmit(e){
         e.preventDefault()
@@ -14,15 +16,30 @@ function Login({setUser, setUserData}) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form)
-        }).then(res => res.json())
-          .then(data => {
-            setUser(data)
-            setUserData(data)
-            setForm({
-                username: "",
-                password: ""
-            })
-          })
+        }).then(res => {
+            if(res.ok){
+                res.json()
+                .then(user =>{
+                    setUser(user)
+                    setUserData(user)
+                    history.push('/')
+                })
+            } else {
+                res.json()
+                .then(json => console.log(json.error))
+            }
+        })
+          
+        // }).then(res => res.json())
+        //   .then(data => {
+        //     setUser(data)
+        //     setUserData(data)
+        //     setForm({
+        //         username: "",
+        //         password: ""
+        //     })
+        //     history.push('/')
+        //   })
     }
 
     function handleChange(e){

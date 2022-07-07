@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   delete 'logout', to: "sessions#logout"
   delete "empty_cart/:id", to: "order_numbers#empty_cart"
 
+  post '/presigned_url', to: 'direct_upload#create'
+
   get '*path',
       to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }

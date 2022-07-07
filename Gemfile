@@ -16,7 +16,10 @@ gem "puma", "~> 5.0"
 # gem "jbuilder"
 
 # AWS S3 GEMFILE [https://aws.amazon.com/sdk-for-ruby/]
-gem 'aws-sdk', '~> 3'
+# gem 'aws-sdk', '~> 3'
+
+# gem 'aws-sdk-s3'
+# gem 'dotenv-rails', groups: [:development, :test]
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

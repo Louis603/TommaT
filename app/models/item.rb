@@ -7,6 +7,14 @@ class Item < ApplicationRecord
     has_many :likes
     has_one :order_number
 
+    has_one_attached :avatar
+
+    def resume_url
+        if avatar.attached?
+          avatar.blob.service_url
+        end
+    end
+
     validates :user_id, presence: true
     validates :category_id, presence: true
     validates :image, presence: true

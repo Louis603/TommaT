@@ -90,30 +90,8 @@ function NewItemForm({user, newItem}) {
 
         })
         
-        //   fetch("/tags",{
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         tags: [ 
-        //             tagForm.tag1, 
-        //             tagForm.tag2, 
-        //             tagForm.tag3
-        //         ]
-        //     })
-        // }).then(res => res.json())
-        //   .then(data => {
-        //     data.map(d => {
-        //         fetch("/item_tags",{
-        //             method: 'POST',
-        //             headers: { 'Content-Type': 'application/json' },
-        //             body: JSON.stringify({
-        //                 item_id: newItemId,
-        //                 tag_id: d.id
-        //             })
-        //         })
-        //     })
-        //   })
     }
+
  
     const dropdownCat = categories.map(cat => {
         return <option key={cat.id} value={cat.id} >{cat.name}</option>
@@ -166,6 +144,8 @@ function NewItemForm({user, newItem}) {
 
             <input type="submit" value="Submit" />
         </form>
+
+        {/* <input onChange={handleImage} type="file" id="image" /> */}
     </div>
   )
 }

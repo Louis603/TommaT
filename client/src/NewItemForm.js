@@ -47,7 +47,7 @@ function NewItemForm({user, newItem}) {
         // setTagForm({...tagForm, [e.target.name]:e.target.value})
         // let tag = document.querySelector("#tag_field");
         setTagForm([...tagForm, testTag]);
-        // console.log(tagForm)
+        console.log(tagForm)
     }
 
     function handleFile(e) {
@@ -154,7 +154,7 @@ function NewItemForm({user, newItem}) {
                 <button type="button" onClick={handleAddTag}>Add Tag</button>
                 <ul>
                     {tagForm.map(tag => {
-                        return <li >{tag}</li>
+                        return <li key={tag}>{tag}</li>
                     })}
                 </ul>
                 {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>

@@ -19,7 +19,13 @@ Rails.application.routes.draw do
   delete 'logout', to: "sessions#logout"
   delete "empty_cart/:id", to: "order_numbers#empty_cart"
 
+  # AWS attempt route
   # post '/presigned_url', to: 'direct_upload#create'
+
+  # ActionCable routes
+  resources :conversations, only: [:index, :create]
+  resources :messages, only: [:create]
+  mount ActionCable.server => '/cable'
 
   get '*path',
       to: 'fallback#index',

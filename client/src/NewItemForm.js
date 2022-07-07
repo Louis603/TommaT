@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 function NewItemForm({user, newItem}) {
+    const [testTag, setTestTag] = useState()
     const [newItemId, setNewItemId] = useState(null)
     const [categories, setCategories] = useState([])
     const [tags, setTags] = useState([])
@@ -14,11 +15,12 @@ function NewItemForm({user, newItem}) {
         category_id: ""
     })
 
-    const [tagForm, setTagForm] = useState({
-        tag1:"",
-        tag2:"",
-        tag3:"",
-    })
+    // const [tagForm, setTagForm] = useState({
+    //     tag1:"",
+    //     tag2:"",
+    //     tag3:"",
+    // })
+    const [tagForm, setTagForm] = useState([])
 
     useEffect(() => {
         fetch("/categories")
@@ -38,8 +40,21 @@ function NewItemForm({user, newItem}) {
     }
 
     function handleTagChange(e){
-        setTagForm({...tagForm, [e.target.name]:e.target.value})
+        setTestTag(e.target.value)
+    }
+
+    function handleAddTag(e){
+        // setTagForm({...tagForm, [e.target.name]:e.target.value})
+        // let tag = document.querySelector("#tag_field");
+        setTagForm([...tagForm, testTag]);
         // console.log(tagForm)
+    }
+
+    function handleFile(e) {
+        let img = e.target.files[0];
+        console.log(img);
+        console.log(URL.createObjectURL(img));
+
     }
 
 
@@ -68,11 +83,12 @@ function NewItemForm({user, newItem}) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    tags: [ 
-                        tagForm.tag1, 
-                        tagForm.tag2, 
-                        tagForm.tag3
-                    ]
+                    // tags: [ 
+                    //     tagForm.tag1, 
+                    //     tagForm.tag2, 
+                    //     tagForm.tag3
+                    // ]
+                    tags: tagForm
                 })
             }).then(res => res.json())
               .then(data => {
@@ -134,14 +150,23 @@ function NewItemForm({user, newItem}) {
                 </select>
             </label><br/>
             <label> Tag
-                <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>
+                <input id="tag_field" type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
+                <button type="button" onClick={handleAddTag}>Add Tag</button>
+                <ul>
+                    {tagForm.map(tag => {
+                        return <li >{tag}</li>
+                    })}
+                </ul>
+                {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>
                 <input type="text" name="tag2" value={tagForm.tag2} list="data" onChange={handleTagChange}/>
-                <input type="text" name="tag3" value={tagForm.tag3} list="data" onChange={handleTagChange}/>
+                <input type="text" name="tag3" value={tagForm.tag3} list="data" onChange={handleTagChange}/> */}
                     <datalist id="data">
                         {tagSuggestions}
                     </datalist>
             </label>
-
+            <label>File
+                <input type="file" name="file_upload" onChange={handleFile} />
+            </label>
             <input type="submit" value="Submit" />
         </form>
 

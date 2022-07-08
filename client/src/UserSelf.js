@@ -5,11 +5,11 @@ import { Rating } from 'react-simple-star-rating'
 function UserSelf({user, userData}) {
     const [rating, setRating] = useState(0)
 
-    console.log(userData.order_numbers)
-    console.log(userData.items)
+    // console.log(userData.order_numbers)
+    // console.log(userData.items)
     const soldFilter = userData.items.filter(item => item.sold === true)
     const sellingFilter = userData.items.filter(item => item.sold !== true)
-    console.log(soldFilter.length)
+    // console.log(soldFilter.length)
     const selling = sellingFilter.map(item => {
         return (
             <div key={item.id}> 
@@ -45,7 +45,6 @@ function UserSelf({user, userData}) {
             </div>
         )
     })
-    console.log(bought)
 
 
   return (

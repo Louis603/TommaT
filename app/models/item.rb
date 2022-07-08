@@ -6,6 +6,7 @@ class Item < ApplicationRecord
     has_many :carts
     has_many :likes
     has_one :order_number
+    has_one :review
 
     # has_one_attached :avatar
 

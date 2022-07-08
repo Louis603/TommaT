@@ -1,0 +1,2 @@
+class AddBuyerToReview < ApplicationRecord
+end

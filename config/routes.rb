@@ -18,14 +18,15 @@ Rails.application.routes.draw do
   get "/me", to: "users#show"
   delete 'logout', to: "sessions#logout"
   delete "empty_cart/:id", to: "order_numbers#empty_cart"
+  get '/profile/:id', to: "users#profile"
 
   # AWS attempt route
   # post '/presigned_url', to: 'direct_upload#create'
 
   # ActionCable routes
-  resources :conversations, only: [:index, :create]
-  resources :messages, only: [:create]
-  mount ActionCable.server => '/cable'
+  # resources :conversations, only: [:index, :create]
+  # resources :messages, only: [:create]
+  # mount ActionCable.server => '/cable'
 
   get '*path',
       to: 'fallback#index',

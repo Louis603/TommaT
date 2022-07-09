@@ -19,6 +19,11 @@ class UsersController < ApplicationController
         render json: user, status: :created
     end
 
+    def profile
+        user = User.find(params[:id])
+        render json: user, status: :ok
+    end
+
 
     private
 

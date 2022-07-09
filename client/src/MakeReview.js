@@ -5,17 +5,22 @@ import { Rating } from 'react-simple-star-rating'
 function MakeReview() {
     const [singleItem, setSingleItem] = useState({})
     const [rating, setRating] = useState(0)
-    const [review, setReview] = useState()
+    const [reviewForm, setReviewForm] = useState()
+    const [hasReview, setHasReview] = useState(null)
     // console.log(rating)
     // console.log(review)
-    // console.log(singleItem)
+    console.log(singleItem.review)
+    console.log(singleItem)
 
     const { id } = useParams()
 
     useEffect(() =>{
         fetch(`/items/${id}`)
         .then(resp => resp.json())
-        .then((data) => setSingleItem(data))
+        .then((data) => {
+          setSingleItem(data)
+          setHasReview(data.review)
+        })
       }, []);
 
       function handleRating(rate){
@@ -24,14 +29,14 @@ function MakeReview() {
       }
 
       function handleChange(e){
-        setReview(e.target.value)
+        setReviewForm(e.target.value)
       }
 
       function handleSubmit(e){
         e.preventDefault()
         const form = {
             score: rating,
-            comment: review,
+            comment: reviewForm,
             user_id: singleItem.user_id,
             item_id: singleItem.id
         }
@@ -42,21 +47,29 @@ function MakeReview() {
             body: JSON.stringify(form)
         }).then(res => res.json())
           .then(data => console.log(data))
-        
       }
     
   return (
     <div>
-        <h4>Leave A Review</h4>
-        <img src={singleItem.image} style={{width: "20%"}}/>
-        <form onSubmit={handleSubmit}>
+      
+      {hasReview ? 
+      <>
+      <h4>Your Review</h4>
+      <Rating readonly="true" ratingValue={hasReview.score} />
+      <p><b>{hasReview.buyer}</b>: "{hasReview.comment}"</p>
+      </>
+      : 
+      <form onSubmit={handleSubmit}>
             <label>Leave A Review
                 <Rating onClick={handleRating} ratingValue={rating} />
                 {/* RATING RATING RATING */}
-                <textarea rows="4" cols="50" name="comment" value={review} onChange={handleChange}/>
+                <textarea rows="4" cols="50" name="comment" value={reviewForm} onChange={handleChange}/>
             </label>
             <input type="submit" value="submit" />
         </form>
+      }
+      <p>Sold by: {singleItem.seller_name}</p>
+      <img src={singleItem.image} style={{width: "20%"}}/>
     </div>
   )
 }

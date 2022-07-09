@@ -1,10 +1,11 @@
 class ItemSerializer < ActiveModel::Serializer
   attributes :id, :price, :name, :description, :image, 
-    :condition, :user_id, :category_id, :sold, :summary, :category, :seller
+    :condition, :user_id, :category_id, :sold, :summary, :category, :seller_name
 
   has_many :tags, serializer: ItemHashtagSerializer
+  has_one :review
 
-  def seller
+  def seller_name
     self.object.user.username
   end
 

@@ -8,4 +8,5 @@ class User < ApplicationRecord
     has_one :cart
     
     # validates :password, length: { minimum: 3 }, allow_nil: true
+    validates :username, uniqueness: true
 end

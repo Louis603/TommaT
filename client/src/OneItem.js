@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 
-function OneItem({user}) {
+function OneItem({user, userData}) {
     const [singleItem, setSingleItem] = useState({})
     const { id } = useParams()
+
+    // console.log(user.id)
+    console.log(singleItem)
 
     useEffect(() =>{
         fetch(`/items/${id}`)
@@ -29,11 +32,12 @@ function OneItem({user}) {
 
   return (
     <div>
-        <h4>SELLER: {singleItem.seller}</h4>
+        <h4>SELLER: {singleItem.seller_name}</h4>
         {singleItem.name}
         {singleItem.price}
         <img src={singleItem.image} style={{width: "20%"}}/>
-        <button onClick={handleClick}>BUY</button>
+        {userData.id === singleItem.user_id ? null : <button onClick={handleClick}>BUY</button>}
+        {/* <button onClick={handleClick}>BUY</button> */}
     </div>
   )
 }

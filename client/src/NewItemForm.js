@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 function NewItemForm({user, newItem}) {
+    const [selectedImage, setSelectedImage] = useState(null);
     const [testTag, setTestTag] = useState()
     const [newItemId, setNewItemId] = useState(null)
     const [categories, setCategories] = useState([])
@@ -14,13 +15,13 @@ function NewItemForm({user, newItem}) {
         user_id: "",
         category_id: ""
     })
+    const [tagForm, setTagForm] = useState([])
 
     // const [tagForm, setTagForm] = useState({
     //     tag1:"",
     //     tag2:"",
     //     tag3:"",
     // })
-    const [tagForm, setTagForm] = useState([])
 
     useEffect(() => {
         fetch("/categories")
@@ -43,16 +44,22 @@ function NewItemForm({user, newItem}) {
         setTestTag(e.target.value)
     }
 
-    function handleAddTag(e){
-        // setTagForm({...tagForm, [e.target.name]:e.target.value})
-        // let tag = document.querySelector("#tag_field");
+    function handleAddTag(){
         setTagForm([...tagForm, testTag]);
         console.log(tagForm)
+        setTestTag("")
+    }
+
+    function handleDelete(tag){
+        console.log(tag)
+        const deleteTag = tagForm.filter(t => t !== tag)
+        setTagForm(deleteTag)
     }
 
     function handleFile(e) {
         let img = e.target.files[0];
-        console.log(img);
+        console.log(img)
+        setSelectedImage(img);
         console.log(URL.createObjectURL(img));
 
     }
@@ -83,11 +90,6 @@ function NewItemForm({user, newItem}) {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    // tags: [ 
-                    //     tagForm.tag1, 
-                    //     tagForm.tag2, 
-                    //     tagForm.tag3
-                    // ]
                     tags: tagForm
                 })
             }).then(res => res.json())
@@ -121,6 +123,8 @@ function NewItemForm({user, newItem}) {
     
   return (
     <div>
+        {selectedImage? <img src={URL.createObjectURL(selectedImage)}></img> : null}
+        
         <form onSubmit={handleSubmit}>
             <label>Price
                 <input type="number" name="price" placeholder='Enter Price' step="any" value={form.price} onChange={handleChange}></input>
@@ -150,11 +154,11 @@ function NewItemForm({user, newItem}) {
                 </select>
             </label><br/>
             <label> Tag
-                <input id="tag_field" type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
+                <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
                 <button type="button" onClick={handleAddTag}>Add Tag</button>
                 <ul>
                     {tagForm.map(tag => {
-                        return <li key={tag}>{tag}</li>
+                        return <button key={tag} onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></button>
                     })}
                 </ul>
                 {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>

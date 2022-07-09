@@ -11,6 +11,7 @@ import OneItem from './OneItem';
 import UserSelf from './UserSelf';
 import Cart from './Cart';
 import MakeReview from './MakeReview';
+import UserOther from './UserOther';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
@@ -29,9 +30,10 @@ function App() {
     .then((response) => {
       if (response.ok) {
         response.json()
-        .then((user) => {
-          setUser(user)
-          setUserData(user)
+        .then((data) => {
+          setUser(data)
+          setUserData(data)
+          console.log(data)
           // console.log("user check fetch")
         });
       }});
@@ -87,7 +89,7 @@ function App() {
 
           
           <Route exact path="/">
-            <ItemList itemsArr={itemsArr}/>
+            <ItemList itemsArr={itemsArr} user={user} userData={userData}/>
           </Route>
           
           <Route path="/new_item">
@@ -95,11 +97,15 @@ function App() {
           </Route>
           
           <Route path="/items/:id">
-            <OneItem user={user}/>
+            <OneItem user={user} userData={userData}/>
           </Route>
           
           <Route path="/new_review/:id">
             <MakeReview user={user}/>
+          </Route>
+          
+          <Route path="/user_profile/:id">
+            <UserOther user={user} userData={userData}/>
           </Route>
 
         </Switch>

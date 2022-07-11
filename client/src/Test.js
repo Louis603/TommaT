@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react'
-import ReactTags from 'react-tag-autocomplete'
+// import ReactTags from 'react-tag-autocomplete'
 
 function Test () {
   const [tags, setTags] = useState([])
@@ -24,13 +24,14 @@ function Test () {
   }, [tags])
 
   return (
-    <ReactTags
-      ref={reactTags}
-      tags={tags}
-      suggestions={suggestions}
-      onDelete={onDelete}
-      onAddition={onAddition}
-    />
+    <div></div>
+    // <ReactTags
+    //   ref={reactTags}
+    //   tags={tags}
+    //   suggestions={suggestions}
+    //   onDelete={onDelete}
+    //   onAddition={onAddition}
+    // />
   )
 }
 

@@ -74,7 +74,9 @@ function App() {
     console.log(searchItemsArr)
   }
   return (
-    <ChakraProvider>
+    <ChakraProvider 
+    // resetCSS={false}
+    >
     
       <div className="App">
         <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
@@ -129,7 +131,7 @@ function App() {
         </Switch>
           
       </div>
-      </ChakraProvider>
+    </ChakraProvider>
   );
 }
 

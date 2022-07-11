@@ -53,7 +53,9 @@ function UserSelf({user, userData}) {
         <div>
         <h2>PROFILE PAGE</h2>
         <h4>Your Seller Rating</h4>
-        <Rating ratingValue={userData.average_score} readonly="true" />
+        <div>
+        <Rating style={{display: "flex"}}ratingValue={userData.average_score} readonly="true" />
+        </div>
         {sellingFilter.length === 0 ? ( null) : (
             <div>
                 <h3>SELLING</h3>

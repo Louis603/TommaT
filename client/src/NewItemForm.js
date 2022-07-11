@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './tags.css'
+import './App.css';
+import { Button, ButtonGroup } from '@chakra-ui/react'
 
 
 const tagStyle = {
@@ -172,7 +174,7 @@ function NewItemForm({user, newItem}) {
             
             <label> Tag
                 {/* <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
-                <button type="button" onClick={handleAddTag}>Add Tag</button> */}
+                <Button type="Button" onClick={handleAddTag}>Add Tag</Button> */}
                 <div className='tags-input'>
                 <ul id='tags'>
                     {tagForm.map(tag => {
@@ -183,11 +185,11 @@ function NewItemForm({user, newItem}) {
                         </li>)
                     })}
                     {/* {tagForm.map(tag => {
-                        return <button onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></button>
+                        return <Button onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></Button>
                     })} */}
                 </ul>
                 <input className='tags-input-form' placeholder='Click Add Tag Button To Add Tags' type="text" name="tag" list="data" value={testTag} onChange={handleTagChange} />
-                <button style={{marginTop: '10px'}}type="button" onClick={handleAddTag}>Add Tag</button>
+                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
                 </div>
                 
                 {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>
@@ -202,7 +204,7 @@ function NewItemForm({user, newItem}) {
             {/* <label>File
                 <input type="file" name="file_upload" onChange={handleFile} />
             </label> */}
-            <input type="submit" value="Submit" />
+            <Button type="submit" value="Submit">Submit</Button>
         </form>
 
         {/* <input onChange={handleImage} type="file" id="image" /> */}

@@ -1,5 +1,17 @@
 import React, {useState, useEffect} from 'react'
 
+
+const tagStyle = {
+	display: "flex",
+	alignItems: "flex-start",
+	flexWrap: "wrap",
+	minHeight: "48px",
+	width: "480px",
+	padding: "0 8px",
+	border:" 1px solid rgb(214, 216, 218)",
+	borderRadius: "6px"
+	}
+
 function NewItemForm({user, newItem}) {
     const [selectedImage, setSelectedImage] = useState(null);
     const [testTag, setTestTag] = useState()
@@ -45,7 +57,10 @@ function NewItemForm({user, newItem}) {
     }
 
     function handleAddTag(){
-        setTagForm([...tagForm, testTag]);
+        if(tagForm.includes(testTag)){
+            console.log("exists")
+        }else{
+            setTagForm([...tagForm, testTag])}
         console.log(tagForm)
         setTestTag("")
     }
@@ -154,13 +169,23 @@ function NewItemForm({user, newItem}) {
                 </select>
             </label><br/>
             <label> Tag
-                <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
-                <button type="button" onClick={handleAddTag}>Add Tag</button>
+                {/* <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
+                <button type="button" onClick={handleAddTag}>Add Tag</button> */}
+                <div style={tagStyle}>
                 <ul>
                     {tagForm.map(tag => {
-                        return <button key={tag} onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></button>
+                        return (
+                        <li>
+                            <span onClick={(e) => handleDelete(tag)}>{tag} </span>
+                        </li>)
                     })}
+                    {/* {tagForm.map(tag => {
+                        return <button onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></button>
+                    })} */}
                 </ul>
+                <input style={{border: "none"}} type="text" name="tag" list="data" value={testTag} onChange={handleTagChange} />
+                <button type="button" onClick={handleAddTag}>Add Tag</button>
+                </div>
                 {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>
                 <input type="text" name="tag2" value={tagForm.tag2} list="data" onChange={handleTagChange}/>
                 <input type="text" name="tag3" value={tagForm.tag3} list="data" onChange={handleTagChange}/> */}
@@ -168,9 +193,9 @@ function NewItemForm({user, newItem}) {
                         {tagSuggestions}
                     </datalist>
             </label>
-            <label>File
+            {/* <label>File
                 <input type="file" name="file_upload" onChange={handleFile} />
-            </label>
+            </label> */}
             <input type="submit" value="Submit" />
         </form>
 

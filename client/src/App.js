@@ -13,6 +13,7 @@ import Cart from './Cart';
 import MakeReview from './MakeReview';
 import UserOther from './UserOther';
 import SearchResults from './SearchResults';
+import Test from './Test';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
@@ -117,6 +118,10 @@ function App() {
           
           <Route path="/search_results">
             <SearchResults user={user} userData={userData} searchItemsArr={searchItemsArr}/>
+          </Route>
+          
+          <Route path="/test">
+            <Test user={user} userData={userData} searchItemsArr={searchItemsArr}/>
           </Route>
 
         </Switch>

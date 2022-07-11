@@ -13,6 +13,7 @@ function Header({user, handleLogout, handleSearch }) {
   const [ searchNameForm, setSearchNameForm] = useState("")
   const [ searchTagForm, setSearchTagForm] = useState("")
   const [tags, setTags] = useState([])
+  const [tagForm, setTagForm] = useState([])
 
   let history = useHistory()
 
@@ -47,6 +48,39 @@ function Header({user, handleLogout, handleSearch }) {
       console.log(data)
       history.push('/search_results')
     })
+  }
+
+  function handleAddTag(){
+    if(tagForm.includes(searchTagForm)){
+        console.log("exists")
+    }else{
+        setTagForm([...tagForm, searchTagForm])}
+    console.log(tagForm)
+    setSearchTagForm("")
+  }
+
+  function handleDelete(tag){
+    console.log(tag)
+    const deleteTag = tagForm.filter(t => t !== tag)
+    setTagForm(deleteTag)
+  }
+
+  function handleTagSubmit(e){
+    e.preventDefault()
+    console.log(tagForm)
+    fetch("/search_tags",{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({tagSearch: tagForm})
+  }).then(res => res.json())
+    .then(data => {
+      // handleSearch(data)
+      console.log(data)
+      setTagForm([])
+      
+      // history.push('/search_results')
+    })
+
   }
 
 
@@ -84,11 +118,23 @@ function Header({user, handleLogout, handleSearch }) {
         </label>
         <button>Submit</button>
       </form>
-      <form>
+      <form onSubmit={handleTagSubmit}>
         <label>Search Tag
+          <div>
+        <ul>
+          {tagForm.map(tag => {
+              return (
+                <li>
+                  <span onClick={(e) => handleDelete(tag)}>{tag} </span>
+                </li>)
+           })}
+           </ul>
           <input type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
+          </div>
         </label>
+        <button type="button" onClick={handleAddTag}>Add Tag</button>
         <button>Submit</button>
+        
 
         <datalist id="data">
           {tagSuggestions}

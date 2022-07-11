@@ -40,6 +40,16 @@ class TagsController < ApplicationController
         head :no_content
     end
 
+    def search
+        params = ["ps5", "ps3", "Ponyta"]
+        params_string = "pon"
+        result = Tag.where(hashtag: params[:tagSearch])
+        
+        search = result.map {|s| s.items}.flatten
+        # search2 = Item.where("lower(name) LIKE ?", "%#{params_string.downcase}%")
+        render json: search
+    end
+
     private
 
     def find_tag

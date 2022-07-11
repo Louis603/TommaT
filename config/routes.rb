@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   delete 'logout', to: "sessions#logout"
   delete "empty_cart/:id", to: "order_numbers#empty_cart"
   get '/profile/:id', to: "users#profile"
+  post '/search', to: "tags#search"
+  post 'search_name', to: "items#search_name"
 
   # AWS attempt route
   # post '/presigned_url', to: 'direct_upload#create'

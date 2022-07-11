@@ -29,6 +29,15 @@ class ItemsController < ApplicationController
     head :no_content
   end
 
+  def search_name
+    
+    # search2 = Item.where("lower(name) LIKE ?", "%#{params_string.downcase}%")
+    items = Item.arel_table
+    search = Item.where(items[:name].matches("%#{params[:nameSearch]}%"))
+    # search3 = Item.items[:name].matches("%pon%")
+    render json: search
+  end
+
   private
 
     def find_item

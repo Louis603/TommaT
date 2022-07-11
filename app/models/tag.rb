@@ -4,7 +4,7 @@ class Tag < ApplicationRecord
 
     validates :hashtag, uniqueness: true, format: { with: /\A[a-z0-9]+\z/ }, presence: true
 
-    def items
-        byebug
-    end
+    # def items
+    #     byebug
+    # end
 end

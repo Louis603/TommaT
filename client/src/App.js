@@ -12,11 +12,13 @@ import UserSelf from './UserSelf';
 import Cart from './Cart';
 import MakeReview from './MakeReview';
 import UserOther from './UserOther';
+import SearchResults from './SearchResults';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
-  console.log(soldBoolean)
+  // console.log(soldBoolean)
   const [itemsArr, setItemsArr] = useState([]);
+  const [searchItemsArr, setSearchItemsArr] = useState([]);
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({ 
     items:[], 
@@ -64,10 +66,15 @@ function App() {
     console.log(boughtItem)
     setItemsArr(boughtItem)
   }
+
+  function handleSearch(data){
+    setSearchItemsArr(data)
+    console.log(searchItemsArr)
+  }
   return (
     
       <div className="App">
-        <Header user={user} handleLogout={handleLogout}/>
+        <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
         {user ? <h1>{user.username}</h1> : <h1>Not logged in</h1>}
         <Switch>
           
@@ -101,11 +108,15 @@ function App() {
           </Route>
           
           <Route path="/new_review/:id">
-            <MakeReview user={user}/>
+            <MakeReview user={user} userData={userData}/>
           </Route>
           
           <Route path="/user_profile/:id">
             <UserOther user={user} userData={userData}/>
+          </Route>
+          
+          <Route path="/search_results">
+            <SearchResults user={user} userData={userData} searchItemsArr={searchItemsArr}/>
           </Route>
 
         </Switch>

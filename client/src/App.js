@@ -1,4 +1,5 @@
 import './App.css';
+import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useHistory } from "react-router-dom"
@@ -73,6 +74,7 @@ function App() {
     console.log(searchItemsArr)
   }
   return (
+    <ChakraProvider>
     
       <div className="App">
         <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
@@ -127,7 +129,7 @@ function App() {
         </Switch>
           
       </div>
-
+      </ChakraProvider>
   );
 }
 

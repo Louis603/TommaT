@@ -11,6 +11,7 @@
         "heroku-postbuild": "npm run clean && npm run build && npm run deploy"
     },
     "dependencies": {
+        "@chakra-ui/react": "^2.2.3",
         "react-tag-autocomplete": "^6.3.0"
     }
 }

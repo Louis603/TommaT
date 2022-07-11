@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {NavLink} from 'react-router-dom'
 import { useHistory } from "react-router-dom"
+import './tags.css'
 
 
 
@@ -74,9 +75,10 @@ function Header({user, handleLogout, handleSearch }) {
       body: JSON.stringify({tagSearch: tagForm})
   }).then(res => res.json())
     .then(data => {
-      // handleSearch(data)
+      handleSearch(data)
       console.log(data)
       setTagForm([])
+      history.push('/search_results')
       
       // history.push('/search_results')
     })
@@ -114,28 +116,29 @@ function Header({user, handleLogout, handleSearch }) {
     </div>
       <form onSubmit={handleNameSubmit}>
         <label>Search Name
-          <input type="text" name="searchName" value={searchNameForm} onChange={handleSearchName}></input>
+          <input className='search-name-form' type="text" name="searchName" value={searchNameForm} onChange={handleSearchName}></input>
         </label>
         <button>Submit</button>
       </form>
       <form onSubmit={handleTagSubmit}>
         <label>Search Tag
-          <div>
-        <ul>
-          {tagForm.map(tag => {
-              return (
-                <li>
-                  <span onClick={(e) => handleDelete(tag)}>{tag} </span>
-                </li>)
-           })}
-           </ul>
-          <input type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
+          <div className='tags-input'>
+          <ul id='tags'>
+            {tagForm.map(tag => {
+                return (
+                  <li className='tag'>
+                    <span className='tag-title' >{tag} </span>
+                    <span className='tag-close-icon' onClick={(e) => handleDelete(tag)}>x</span>
+                  </li>)
+              })}
+            </ul>
+          <input className='tags-input-form' type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
+          <button style={{marginTop: '10px'}} type="button" onClick={handleAddTag}>Add Tag</button>
           </div>
         </label>
-        <button type="button" onClick={handleAddTag}>Add Tag</button>
+        
         <button>Submit</button>
         
-
         <datalist id="data">
           {tagSuggestions}
         </datalist>

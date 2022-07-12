@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 function OneItem({user, userData}) {
-    const [singleItem, setSingleItem] = useState({})
+    const [singleItem, setSingleItem] = useState({tags:[]})
     const { id } = useParams()
 
     // console.log(user.id)
@@ -29,6 +29,8 @@ function OneItem({user, userData}) {
         .then(data => console.log(data))
     }
 
+    const tags = singleItem.tags.map(tag => <p className='item-focus-tags'>#{tag.hashtag}</p>)
+    console.log(singleItem.tags)
 
 
 
@@ -39,10 +41,10 @@ function OneItem({user, userData}) {
           <img src={singleItem.image} style={{width: "600px"}}/>
         </div>
         <div className='item-focus-description'>
-          <h1>ITEM NAME NAME NAME NAME NAME NAME NAMENAMENAMENAMENAME</h1>
-          <h2>$35</h2>
+          <h1>{singleItem.name}</h1>
+          <h2>${singleItem.price}</h2>
           <h2>DESCRIPTION 
-          <p>description </p></h2>
+          <p>{singleItem.description}</p></h2>
           <h3 style={{marginBottom:"20px", width:"100px"}}>
             Sold By:
             {userData.id === singleItem.user_id ? 
@@ -58,15 +60,17 @@ function OneItem({user, userData}) {
           {userData.id === singleItem.user_id ? null : <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>}
           <div className='item-focus-small'>
             <p className='item-focus-small-left'>Condition</p>
-            <p className='item-focus-small-right'>New</p>
+            <p className='item-focus-small-right'>{singleItem.condition}</p>
           </div>
           <div className='item-focus-small'>
             <p className='item-focus-small-left'>Category</p>
-            <p className='item-focus-small-right'>category</p>
+            <p className='item-focus-small-right'>{singleItem.category}</p>
           </div>
           <div className='item-focus-small'>
             <p className='item-focus-small-left'>Tags</p>
-            <p className='item-focus-small-right'>#ps4</p>
+            <div className='item-focus-small-right'>
+              {tags}
+            </div>
           </div>
           <h3>Buyer Protection Guarantee
             <p>Money Back Guarantee</p>

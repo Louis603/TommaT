@@ -19,6 +19,7 @@ function Header({user, handleLogout, handleSearch }) {
   const [ searchTagForm, setSearchTagForm] = useState("")
   const [tags, setTags] = useState([])
   const [tagForm, setTagForm] = useState([])
+  const [categoryArr, setCategoryArr] = useState([])
 
   let history = useHistory()
 
@@ -27,10 +28,37 @@ function Header({user, handleLogout, handleSearch }) {
     .then(res => res.json())
     .then(data => setTags(data))
   },[])
+  useEffect(() => {
+    fetch("/categories")
+    .then(res => res.json())
+    .then(data => setCategoryArr(data))
+  },[])
 
   const tagSuggestions = tags.map(tag => {
     return <option key={tag.id} value={tag.hashtag} />
   })
+
+  const categoryList = categoryArr.map(cat => {
+    return (
+      <NavLink to='/search_results' onClick={() => handleCategory(cat)} key={cat.id}>
+        <h4 key={cat.id} className='category-links'>{cat.name}</h4>
+      </NavLink>
+      
+      )
+  })
+
+  function handleCategory(cat){
+    fetch("/category_items",{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({category_id: cat.id})
+  }).then(res => res.json())
+    .then(data => {
+      handleSearch(data)
+      console.log(data)
+      // history.push('/search_results')
+    })
+  }
 
 
   function handleSearchName(e){
@@ -128,7 +156,11 @@ function Header({user, handleLogout, handleSearch }) {
 
         <TabPanels>
           <TabPanel>
-            <p>Category nav</p>
+            {/* <div > */}
+              <div style={{display:"flex", marginBottom:"5px"}}>
+                {categoryList}
+              </div>
+            {/* </div> */}
           </TabPanel>
           <TabPanel>
             <form onSubmit={handleNameSubmit}>

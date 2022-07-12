@@ -147,10 +147,15 @@ input{
 
 .item-focus-small-right{
   margin-left: 13%;
+  display: flex;
 }
 .item-focus-small-left{
   margin-left: 10px;
   width: 75px;
+}
+
+.item-focus-tags{
+  margin-left: 5px;
 }
 
 .links{
@@ -158,4 +163,8 @@ input{
   font-size: larger;
   width: 80px;
   color: teal;
+}
+
+.category-links{
+  margin-right: 20px;
 }

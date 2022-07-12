@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { Divider } from '@chakra-ui/react'
 
 function OneItem({user, userData}) {
     const [singleItem, setSingleItem] = useState({tags:[]})
@@ -35,7 +36,7 @@ function OneItem({user, userData}) {
 
 
   return (
-    <div style={{width: "85%"}}>
+    <div style={{width: "85%", marginTop:"40px"}}>
        <div className='item-focus-container'>
         <div className="item-focus-image">
           <img src={singleItem.image} style={{width: "600px"}}/>
@@ -58,6 +59,7 @@ function OneItem({user, userData}) {
               }
           </h3>
           {userData.id === singleItem.user_id ? null : <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>}
+          <Divider style={{marginTop:"20px"}}/>
           <div className='item-focus-small'>
             <p className='item-focus-small-left'>Condition</p>
             <p className='item-focus-small-right'>{singleItem.condition}</p>
@@ -72,7 +74,7 @@ function OneItem({user, userData}) {
               {tags}
             </div>
           </div>
-          <h3>Buyer Protection Guarantee
+          <h3 style={{marginTop:"30px", fontWeight:"bold"}}>Buyer Protection Guarantee
             <p>Money Back Guarantee</p>
             <p>Trust me</p>
           </h3>

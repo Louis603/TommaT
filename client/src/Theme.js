@@ -32,7 +32,18 @@ export const theme = extendTheme({
             
         }
       }
-    }
+    },
+    // colors: {
+    //   transparent: 'transparent',
+    //   black: '#000',
+    //   white: '#fff',
+    //   teal: {
+    //     50: '#f7fafc',
+    //     // ...
+    //     900: '#171923',
+    //   },
+    //   // ...
+    // },
   });
 
 

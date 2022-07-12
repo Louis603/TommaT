@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { useHistory } from "react-router-dom";
+import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Divider } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 function Cart({user, userData, setSoldBoolean, handleBought}) {
     const [userCart, setUserCart] = useState([])
@@ -66,7 +69,6 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
         })
         const filteredCart = userCart.filter(item => item.id !== i.id)
         setUserCart(filteredCart)
-        
       }
 
       let totalPrice = 0
@@ -74,11 +76,21 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
         totalPrice = totalPrice + i.item.price
         // setTotalPrice(i.item.price)
         return(
-            <div key={i.item_id}>
-                <img src={i.item.image} style={{width: "10%"}}/>
-                <p>PRICE: {i.item.price}</p>
-                <button onClick={()=>handleRemove(i)}>Remove from cart</button>
+          <>
+            <div key={i.item_id} className='cart-item'>
+              <Link to={`/items/${i.item.id}`}>
+                <img src={i.item.image} style={{width: "150px"}}/>
+              </Link>
+                <div style={{width:"275px"}}>
+                  <h3>{i.item.name}</h3>
+                  <p>${i.item.price}</p>
+                </div>
+                <div>
+                  <Button className='cart-button' colorScheme='red' onClick={()=>handleRemove(i)}>Remove from cart</Button>
+                </div>
             </div>
+            <Divider></Divider>
+            </>
         )
         
       })
@@ -86,12 +98,22 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
       
 
   return (
-    <div>
+    <div style={{
+      // border: "solid 1px red", 
+      width:"40%", marginLeft:"22%", marginTop:"30px"}}>
         {user? <p>true</p> : <p>false</p>}
         {cartItems}
-        <h2>Total: {totalPrice}</h2>
-        <button onClick={handleBuy}>BUY</button>
-        {purchased ? <h3>Thank You For Your Purchase</h3> : null}
+        {/* <div className='cart-total-right'>
+          <h2>Total: ${totalPrice}</h2>
+          <Button colorScheme="blue" onClick={handleBuy}>BUY</Button>
+        </div> */}
+        {purchased ? 
+        <h3>Thank You For Your Purchase</h3> 
+        : 
+        <div className='cart-total-right'>
+          <h2>Total: ${totalPrice}</h2>
+          <Button colorScheme="blue" onClick={handleBuy}>BUY</Button>
+        </div>}
     </div>
   )
 }

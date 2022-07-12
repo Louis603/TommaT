@@ -79,7 +79,7 @@ function UserSelf({user, userData}) {
                 </div>
             </div>
 
-        <Tabs>
+        <Tabs colorScheme="teal">
             <TabList>
                 <Tab>Selling</Tab>
                 <Tab>Sold</Tab>

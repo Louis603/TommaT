@@ -104,9 +104,9 @@ input{
   flex-wrap: wrap;
   height: auto;
   width: auto;
-  width: 85%;
+  width: 65%;
   justify-content: start;
-  margin-left: 10%;
+  margin-left: 15%;
   margin-top: 40px;
 }
 
@@ -167,4 +167,32 @@ input{
 
 .category-links{
   margin-right: 20px;
+  font-weight: bolder;
+  color: teal;
+}
+
+.cart-item{
+  /* border: solid 2px blue; */
+  display: flex;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+
+.cart-item p, h3{
+  margin-left: 11px;
+  font-weight: bolder;
+}
+
+.cart-button{
+  margin-right: 40%;
+  margin-top: 5%;
+}
+
+.cart-total-right{
+  margin-top: 20px;
+  /* margin-left: 1%; */
+}
+.cart-total-right Button{
+  width: 190px;
+  margin-left: 10px;
 }

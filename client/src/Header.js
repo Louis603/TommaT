@@ -83,7 +83,8 @@ function Header({user, handleLogout, handleSearch }) {
     })
   }
 
-  function handleAddTag(){
+  function handleAddTag(e){
+    e.preventDefault()
     if(tagForm.includes(searchTagForm)){
         console.log("exists")
     }else{
@@ -147,7 +148,7 @@ function Header({user, handleLogout, handleSearch }) {
         
     </div>
       
-      <Tabs>
+      <Tabs colorScheme="teal">
         <TabList>
           <Tab>Categories</Tab>
           <Tab>Search by name</Tab>
@@ -172,7 +173,9 @@ function Header({user, handleLogout, handleSearch }) {
           </TabPanel>
           
           <TabPanel>
-            <form onSubmit={handleTagSubmit}>
+            <form onSubmit={handleAddTag}
+            // onClick={handleTagSubmit}
+            >
               <label>
                 <div className='tags-input'>
                 <ul id='tags'>
@@ -185,16 +188,19 @@ function Header({user, handleLogout, handleSearch }) {
                     })}
                   </ul>
                 <input className='tags-input-form' type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
-                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
+                {/* <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button> */}
                 </div>
+                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
+                
+                
               </label>
-                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' type='submit'>Submit</Button>
+                {/* <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' type='submit'>Submit</Button> */}
               
                 <datalist id="data">
                   {tagSuggestions}
                 </datalist>
             </form>
-
+            <Button onClick={handleTagSubmit}  style={{marginTop: '-32px',marginLeft:"100px", display:"flex"}} colorScheme='teal' size='sm' type='submit'>Submit</Button>
           </TabPanel>
         </TabPanels>
       </Tabs>

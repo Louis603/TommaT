@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get '/profile/:id', to: "users#profile"
   post '/search_tags', to: "tags#search_tags"
   post 'search_name', to: "items#search_name"
+  post 'category_items', to: "categories#category_items"
 
   # AWS attempt route
   # post '/presigned_url', to: 'direct_upload#create'

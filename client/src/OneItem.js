@@ -33,6 +33,15 @@ function OneItem({user, userData}) {
     const tags = singleItem.tags.map(tag => <p className='item-focus-tags'>#{tag.hashtag}</p>)
     console.log(singleItem.tags)
 
+    let button;
+    if(userData.id === singleItem.user_id){
+      button = null
+    } else if(singleItem.sold){
+      button = <p>ITEM SOLD</p>
+    }else{
+      button = <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>
+    }
+
 
 
   return (
@@ -58,7 +67,8 @@ function OneItem({user, userData}) {
               </Link>
               }
           </h3>
-          {userData.id === singleItem.user_id ? null : <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>}
+          {/* {userData.id === singleItem.user_id ? null : <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>} */}
+          {button}
           <Divider style={{marginTop:"20px"}}/>
           <div className='item-focus-small'>
             <p className='item-focus-small-left'>Condition</p>

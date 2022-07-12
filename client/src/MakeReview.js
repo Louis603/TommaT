@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { Rating } from 'react-simple-star-rating'
+import { useHistory } from "react-router-dom"
 
-function MakeReview() {
+function MakeReview({user, userData}) {
     const [singleItem, setSingleItem] = useState({})
     const [rating, setRating] = useState(0)
     const [reviewForm, setReviewForm] = useState()
     const [hasReview, setHasReview] = useState(null)
     // console.log(rating)
     // console.log(review)
-    console.log(singleItem.review)
-    console.log(singleItem)
+    // console.log(singleItem.review)
+    // console.log(singleItem)
+    console.log(userData)
 
     const { id } = useParams()
+    let history = useHistory()
 
     useEffect(() =>{
         fetch(`/items/${id}`)
@@ -38,7 +41,8 @@ function MakeReview() {
             score: rating,
             comment: reviewForm,
             user_id: singleItem.user_id,
-            item_id: singleItem.id
+            item_id: singleItem.id,
+            buyer_id: userData.id
         }
         console.log(form)
         fetch("/reviews",{
@@ -46,7 +50,10 @@ function MakeReview() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(form)
         }).then(res => res.json())
-          .then(data => console.log(data))
+          .then(data => {
+            console.log(data)
+            history.push('/self')
+          })
       }
     
   return (

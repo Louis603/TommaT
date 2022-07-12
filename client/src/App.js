@@ -1,4 +1,5 @@
 import './App.css';
+import { ChakraProvider } from '@chakra-ui/react'
 import { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useHistory } from "react-router-dom"
@@ -12,11 +13,15 @@ import UserSelf from './UserSelf';
 import Cart from './Cart';
 import MakeReview from './MakeReview';
 import UserOther from './UserOther';
+import SearchResults from './SearchResults';
+import Test from './Test';
+import {theme} from './Theme';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
-  console.log(soldBoolean)
+  // console.log(soldBoolean)
   const [itemsArr, setItemsArr] = useState([]);
+  const [searchItemsArr, setSearchItemsArr] = useState([]);
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({ 
     items:[], 
@@ -64,11 +69,20 @@ function App() {
     console.log(boughtItem)
     setItemsArr(boughtItem)
   }
+
+  function handleSearch(data){
+    setSearchItemsArr(data)
+    console.log(searchItemsArr)
+  }
   return (
+    <ChakraProvider 
+    theme={theme}
+    // resetCSS={false}
+    >
     
       <div className="App">
-        <Header user={user} handleLogout={handleLogout}/>
-        {user ? <h1>{user.username}</h1> : <h1>Not logged in</h1>}
+        <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
+        {/* {user ? <h2>{user.username}</h2> : <h1>Not logged in</h1>} */}
         <Switch>
           
           <Route path="/login">
@@ -101,17 +115,25 @@ function App() {
           </Route>
           
           <Route path="/new_review/:id">
-            <MakeReview user={user}/>
+            <MakeReview user={user} userData={userData}/>
           </Route>
           
           <Route path="/user_profile/:id">
             <UserOther user={user} userData={userData}/>
           </Route>
+          
+          <Route path="/search_results">
+            <SearchResults user={user} userData={userData} searchItemsArr={searchItemsArr}/>
+          </Route>
+          
+          <Route path="/test">
+            <Test user={user} userData={userData} searchItemsArr={searchItemsArr}/>
+          </Route>
 
         </Switch>
           
       </div>
-
+    </ChakraProvider>
   );
 }
 

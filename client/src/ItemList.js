@@ -6,6 +6,7 @@ function ItemList({itemsArr, user, userData}) {
   const itemsMapped = unSold.map(item => {
     return (
       <Item
+      
       key={item.id}
       item={item}
       user={user}
@@ -20,7 +21,10 @@ function ItemList({itemsArr, user, userData}) {
 
   return (
     <div>
+      <h1 style={{justifyContent:"start", marginLeft:"10%"}}>Shop Tommat</h1>
+    <div className="selling-page">
         {itemsMapped}
+    </div>
     </div>
   )
 }

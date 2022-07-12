@@ -1,4 +1,19 @@
 import React, {useState, useEffect} from 'react'
+import './tags.css'
+import './App.css';
+import { Button, ButtonGroup } from '@chakra-ui/react'
+
+
+const tagStyle = {
+	display: "flex",
+	alignItems: "flex-start",
+	flexWrap: "wrap",
+	minHeight: "48px",
+	width: "480px",
+	padding: "0 8px",
+	border:" 1px solid rgb(214, 216, 218)",
+	borderRadius: "6px"
+	}
 
 function NewItemForm({user, newItem}) {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -45,7 +60,10 @@ function NewItemForm({user, newItem}) {
     }
 
     function handleAddTag(){
-        setTagForm([...tagForm, testTag]);
+        if(tagForm.includes(testTag)){
+            console.log("exists")
+        }else{
+            setTagForm([...tagForm, testTag])}
         console.log(tagForm)
         setTestTag("")
     }
@@ -153,14 +171,27 @@ function NewItemForm({user, newItem}) {
                     {dropdownCat}
                 </select>
             </label><br/>
+            
             <label> Tag
-                <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
-                <button type="button" onClick={handleAddTag}>Add Tag</button>
-                <ul>
+                {/* <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
+                <Button type="Button" onClick={handleAddTag}>Add Tag</Button> */}
+                <div className='tags-input'>
+                <ul id='tags'>
                     {tagForm.map(tag => {
-                        return <button key={tag} onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></button>
+                        return (
+                        <li className='tag'>
+                            <span className='tag-title' >{tag} </span>
+                            <span className='tag-close-icon' onClick={(e) => handleDelete(tag)}>x</span>
+                        </li>)
                     })}
+                    {/* {tagForm.map(tag => {
+                        return <Button onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></Button>
+                    })} */}
                 </ul>
+                <input className='tags-input-form' placeholder='Click Add Tag Button To Add Tags' type="text" name="tag" list="data" value={testTag} onChange={handleTagChange} />
+                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
+                </div>
+                
                 {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>
                 <input type="text" name="tag2" value={tagForm.tag2} list="data" onChange={handleTagChange}/>
                 <input type="text" name="tag3" value={tagForm.tag3} list="data" onChange={handleTagChange}/> */}
@@ -168,10 +199,12 @@ function NewItemForm({user, newItem}) {
                         {tagSuggestions}
                     </datalist>
             </label>
-            <label>File
+            
+            
+            {/* <label>File
                 <input type="file" name="file_upload" onChange={handleFile} />
-            </label>
-            <input type="submit" value="Submit" />
+            </label> */}
+            <Button type="submit" value="Submit">Submit</Button>
         </form>
 
         {/* <input onChange={handleImage} type="file" id="image" /> */}

@@ -11,7 +11,6 @@ function Login({setUser, setUserData}) {
 
     function handleSubmit(e){
         e.preventDefault()
-        console.log(e)
         fetch("/login",{
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

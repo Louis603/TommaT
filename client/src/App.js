@@ -15,6 +15,7 @@ import MakeReview from './MakeReview';
 import UserOther from './UserOther';
 import SearchResults from './SearchResults';
 import Test from './Test';
+import {theme} from './Theme';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
@@ -75,12 +76,13 @@ function App() {
   }
   return (
     <ChakraProvider 
+    theme={theme}
     // resetCSS={false}
     >
     
       <div className="App">
         <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
-        {user ? <h1>{user.username}</h1> : <h1>Not logged in</h1>}
+        {/* {user ? <h2>{user.username}</h2> : <h1>Not logged in</h1>} */}
         <Switch>
           
           <Route path="/login">

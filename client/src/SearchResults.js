@@ -21,8 +21,11 @@ function SearchResults({searchItemsArr, user, userData}) {
   
     return (
       <div>
+      <h1 style={{justifyContent:"start", marginLeft:"10%"}}>Shop Tommat</h1>
+        <div className="selling-page">
           {itemsMapped}
-      </div>
+        </div>
+    </div>
     )
   }
 

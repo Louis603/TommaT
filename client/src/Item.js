@@ -8,7 +8,8 @@ function Item({item, user, userData}) {
 
   const allTags= tags.map(tag => <p key={tag.hashtag}>Tags: {tag.hashtag}</p>)
   return (
-    <div>
+   
+    <div className="single-item-selling">
       {userData.id === user_id ? 
       <Link to={`/self`}>
         <h4>SELLER: {seller_name}</h4>
@@ -22,15 +23,17 @@ function Item({item, user, userData}) {
       {/* <Link to={`/user_profile/${user_id}`}>
         <h4>SELLER: {seller_name}</h4>
       </Link> */}
-      <p>Price: {price}</p>
-      <p>Title: {name}</p>
-      <p>Description: {description}</p>
-      {allTags}
-      <img src={image} style={{width:"10%"}}></img>
+      
+      {/* {allTags} */}
+      
       <Link to={`/items/${id}`}>
+      <img src={image} style={{width:"300px"}}></img>
         <button>See more</button>
       </Link>
+      <h3>{name}</h3>
+      <p>${price}</p>
     </div>
+
   )
 }
 

@@ -135,7 +135,7 @@ function Header({user, handleLogout, handleSearch }) {
               <label>
                 <Input htmlSize={45} width='auto' type="text" name="searchName" value={searchNameForm} onChange={handleSearchName}></Input>
               </label>
-              <Button style={{margin: "auto"}} colorScheme='teal' size='sm'>Submit</Button>
+              <Button style={{margin: "auto"}} colorScheme='teal' size='sm' type='submit'>Submit</Button>
             </form>
           </TabPanel>
           
@@ -156,7 +156,7 @@ function Header({user, handleLogout, handleSearch }) {
                 <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
                 </div>
               </label>
-                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm'>Submit</Button>
+                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' type='submit'>Submit</Button>
               
                 <datalist id="data">
                   {tagSuggestions}

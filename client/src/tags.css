@@ -8,6 +8,7 @@
 	border: 1px solid rgb(214, 216, 218);
 	border-radius: 6px;
     box-sizing: border-box;
+
 }
 
 .tags-input:focus-within {
@@ -21,6 +22,7 @@
 	font-size: 14px;
 	padding: 4px 0 0 0;
     margin-top: 5px;
+	background: transparent;
 }
 
 .tags-input-form:focus {
@@ -46,7 +48,7 @@
 	list-style: none;
 	border-radius: 6px;
 	margin: 0 8px 8px 0;
-	background: #0052cc;
+	background: teal;
 }
 
 .tag-title {

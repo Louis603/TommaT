@@ -79,7 +79,7 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
           <>
             <div key={i.item_id} className='cart-item'>
               <Link to={`/items/${i.item.id}`}>
-                <img src={i.item.image} style={{width: "150px"}}/>
+                <img src={i.item.images_urls[0]} style={{width: "150px"}}/>
               </Link>
                 <div style={{width:"275px"}}>
                   <h3>{i.item.name}</h3>

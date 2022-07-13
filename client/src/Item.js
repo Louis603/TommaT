@@ -6,7 +6,7 @@ function Item({item, user, userData}) {
   const {id, price, name, description, image, condition, sold, tags, seller_name, user_id, images_urls } = item
   
 
-  const allTags= tags.map(tag => <p key={tag.hashtag}>Tags: {tag.hashtag}</p>)
+  // const allTags= tags.map(tag => <p key={tag.hashtag}>Tags: {tag.hashtag}</p>)
   return (
    
     <div className="single-item-selling">

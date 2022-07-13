@@ -6,15 +6,19 @@ import { Divider } from '@chakra-ui/react'
 
 function OneItem({user, userData}) {
     const [singleItem, setSingleItem] = useState({tags:[], images_urls:[]})
+    const [displayImage, setDisplayImage] = useState()
     const { id } = useParams()
 
     // console.log(user.id)
-    console.log(singleItem.images_urls)
+    console.log(displayImage)
 
     useEffect(() =>{
         fetch(`/items/${id}`)
         .then(resp => resp.json())
-        .then((data) => setSingleItem(data))
+        .then((data) => {
+          setSingleItem(data)
+          setDisplayImage(data.images_urls[0])
+        })
       }, []);
 
     function handleClick(){
@@ -42,13 +46,30 @@ function OneItem({user, userData}) {
       button = <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>
     }
 
+    const imageThumb = singleItem.images_urls.map(image => {
+      return(
+        <img 
+        onClick={() => handleImageClick(image)}
+        className='thumbnail-image-left' 
+        src={image}
+        ></img>
+      )
+    })
+
+    function handleImageClick(image){
+      setDisplayImage(image)
+    }
+
 
 
   return (
     <div style={{width: "85%", marginTop:"40px"}}>
        <div className='item-focus-container'>
+        <div className='thumbnail-image-container'>
+          {imageThumb}
+        </div>
         <div className="item-focus-image">
-          <img src={singleItem.images_urls[0]} style={{width: "600px", height:"700px"}}/>
+          <img src={displayImage} style={{width: "600px", height:"650px", objectFit:"contain"}}/>
         </div>
         <div className='item-focus-description'>
           <h1>{singleItem.name}</h1>

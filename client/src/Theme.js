@@ -20,13 +20,15 @@ export const theme = extendTheme({
           fontWeight: 'bold',
         },
         h3: {
-          fontSize: 'lg'
+          fontSize: 'xl',
+          fontWeight: 'bold',
         },
         h4: {
-          fontSize: 'md'
+          fontSize: 'md',
+          fontWeight: 'bold',
         },
         p: {
-            fontSize: '15px'
+            fontSize: '17px'
         },
         div: {
             

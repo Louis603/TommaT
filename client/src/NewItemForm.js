@@ -1,7 +1,16 @@
 import React, {useState, useEffect} from 'react'
+import { useHistory } from "react-router-dom"
 import './tags.css'
 import './App.css';
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, ButtonGroup, Input, Textarea, Select, Stack, Kbd    } from '@chakra-ui/react'
+import {
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper,
+  } from '@chakra-ui/react'
+import { AttachmentIcon } from '@chakra-ui/icons'
 
 
 const tagStyle = {
@@ -31,12 +40,9 @@ function NewItemForm({user, newItem}) {
         category_id: ""
     })
     const [tagForm, setTagForm] = useState([])
+    const [imageDisplay, setImageDisplay] = useState([])
 
-    // const [tagForm, setTagForm] = useState({
-    //     tag1:"",
-    //     tag2:"",
-    //     tag3:"",
-    // })
+    let history = useHistory()
 
     useEffect(() => {
         fetch("/categories")
@@ -75,12 +81,23 @@ function NewItemForm({user, newItem}) {
     }
 
     function handleFile(e) {
-        let img = e.target.files[0];
-        console.log(img)
-        setSelectedImage(img);
-        console.log(URL.createObjectURL(img));
-
+        // let img = e.target.files[0];
+        // console.log(img)
+        // setSelectedImage(img);
+        // console.log(URL.createObjectURL(img));
+        let imageArray= []
+        for (let i = 0; i<e.target.files.length; i++){
+            // setImageDisplay([...imageDisplay, e.target.files[i]])
+            imageArray.push(e.target.files[i])
+        }
+        setImageDisplay(imageArray)
     }
+
+    const imageUploadDisplay = imageDisplay.map(image => {
+        return (
+            <img className='thumbnail-image-upload' src={URL.createObjectURL(image)}></img>
+        )
+    })
 
 
     function handleSubmit(e){
@@ -113,7 +130,6 @@ function NewItemForm({user, newItem}) {
 
         fetch("/items",{
             method: 'POST',
-
             body: formData
         }).then(res => res.json())
           .then(item => {
@@ -156,42 +172,89 @@ function NewItemForm({user, newItem}) {
     
     
   return (
-    <div>
-        {selectedImage? <img src={URL.createObjectURL(selectedImage)}></img> : null}
-        
+    <div style={{display:"flex"}}>
+    <div className='form-container'>
+        {/* {selectedImage? <img src={URL.createObjectURL(selectedImage)}></img> : null} */}
+        {/* {imageUploadDisplay} */}
         <form onSubmit={handleSubmit}>
+            
+            <div style={{border:"solid 1.5px teal"}}>
+                
+                <label>
+                    <h4 style={{marginLeft:"40%", padding:"10px"}}>Upload Image</h4>
+                    <AttachmentIcon w={8} h={8} color='gray'style={{marginLeft:"45%"}}/>
+                    <h4 style={{marginLeft:"22%", padding:"10px"}}> Hold <Kbd>ctrl</Kbd> or <Kbd>⌘</Kbd> + <Kbd>mouse click</Kbd> to select more than one image</h4>
+
+                    <Input type="file" name="images" multiple display='none'
+                    onChange={handleFile}
+                    />
+                </label>
+            
+            </div>
+            
+            
+            <div>
+            <h3>Product Details</h3>
+                <label > Title
+                    <Input 
+                        type="text" 
+                        name="name" 
+                        value={form.name} 
+                        onChange={handleChange}
+                        placeholder="Name of your item"
+                    ></Input>
+                </label>
+                </div>
+                
+                <div>
+                <label>Description
+                    <Textarea 
+                        resize='vertical'
+                        rows="12"
+                        type="text" 
+                        name="description" 
+                        value={form.description} 
+                        onChange={handleChange}
+                        placeholder="Describe your item"
+                    ></Textarea>
+                </label>
+            </div>
+            <div>
             <label>Price
-                <input type="number" name="price" placeholder='Enter Price' step="any" value={form.price} onChange={handleChange}></input>
+                <Input type="number" name="price" placeholder='Enter Price in $' step="any" value={form.price} onChange={handleChange}></Input>
             </label>
-            <label>Name
-                <input type="text" name="name" value={form.name} onChange={handleChange}></input>
-            </label>
-            <label>Description
-                <input type="text" name="description" value={form.description} onChange={handleChange}></input>
-            </label>
-            {/* <label>Image
-                <input type="text" name="image" value={form.image} onChange={handleChange}></input>
-            </label> */}
-            <label>Condition
-                <select  name="condition" value={form.condition} onChange={handleChange}>
+            </div>
+
+            <label>
+                <Stack spacing={6}>
+                    <h3>Condition/Category</h3>
+                <Select style={{marginTop:"0px"}}  name="condition" value={form.condition} onChange={handleChange}>
                     <option>Condition</option>
                     <option>New</option>
                     <option>Like New</option>
                     <option>Good</option>
                     <option>Used</option>
-                </select>
-            </label>
-            <label>Category
-                <select  name="category_id"  value={form.category_id} onChange={handleChange}>
+                </Select>
+                <Select  name="category_id"  value={form.category_id} onChange={handleChange}>
                     <option>Category</option>
                     {dropdownCat}
-                </select>
+                </Select>
+                </Stack>
+            </label>
+            {/* <label>Category
+                <Select  name="category_id"  value={form.category_id} onChange={handleChange}>
+                    <option>Category</option>
+                    {dropdownCat}
+                </Select>
             </label><br/>
-            
-            <label> Tag
-                {/* <input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
+             */}
+            <label>
+                {/* <Input type="text" name="tag" list="data" value={testTag} onChange={handleTagChange}/>
                 <Button type="Button" onClick={handleAddTag}>Add Tag</Button> */}
-                <div className='tags-input'>
+                <div>
+                <h3>Tags</h3>
+                </div>
+                <section className='tags-input'>
                 <ul id='tags'>
                     {tagForm.map(tag => {
                         return (
@@ -200,30 +263,42 @@ function NewItemForm({user, newItem}) {
                             <span className='tag-close-icon' onClick={(e) => handleDelete(tag)}>x</span>
                         </li>)
                     })}
-                    {/* {tagForm.map(tag => {
-                        return <Button onClick={(e) => handleDelete(tag)}>{tag} <b>x</b></Button>
-                    })} */}
                 </ul>
-                <input className='tags-input-form' placeholder='Click Add Tag Button To Add Tags' type="text" name="tag" list="data" value={testTag} onChange={handleTagChange} />
-                <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
-                </div>
+                <input 
+                    className='tags-input-form' 
+                    placeholder='Click Add Tag Button To Add Tags' 
+                    type="text" 
+                    name="tag" 
+                    list="data" 
+                    value={testTag} 
+                    onChange={handleTagChange} 
+                />
+                <Button 
+                    style={{marginTop: '3px'}} 
+                    colorScheme='teal' size='sm' 
+                    onClick={handleAddTag}
+                >Add Tag
+                </Button>
                 
-                {/* <input type="text" name="tag1" value={tagForm.tag1} list="data" onChange={handleTagChange}/>
-                <input type="text" name="tag2" value={tagForm.tag2} list="data" onChange={handleTagChange}/>
-                <input type="text" name="tag3" value={tagForm.tag3} list="data" onChange={handleTagChange}/> */}
+                </section>
+                    
                     <datalist id="data">
                         {tagSuggestions}
                     </datalist>
             </label>
-            
-            
-            <label>File
-                <input type="file" name="images" multiple/>
-            </label>
-            <Button type="submit" value="Submit">Submit</Button>
+                <Button 
+                style={{marginTop: '5px'}}
+                type="submit" 
+                value="Submit"
+                colorScheme='teal'
+                >Submit</Button>
         </form>
 
-        {/* <input onChange={handleImage} type="file" id="image" /> */}
+        {/* <Input onChange={handleImage} type="file" id="image" /> */}
+        </div>
+        <div className='thumbnail-upload-container'>
+            {imageUploadDisplay}
+        </div>
     </div>
   )
 }

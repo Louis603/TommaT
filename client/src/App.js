@@ -25,7 +25,8 @@ function App() {
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({ 
     items:[], 
-    order_numbers:[], 
+    order_numbers:[],
+    images_urls:[], 
     reviews:[]})
   // console.log(user.cart)
   let history = useHistory()

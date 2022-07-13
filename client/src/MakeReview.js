@@ -1,18 +1,15 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { Rating } from 'react-simple-star-rating'
 import { useHistory } from "react-router-dom"
+import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Textarea } from '@chakra-ui/react'
 
 function MakeReview({user, userData}) {
-    const [singleItem, setSingleItem] = useState({})
+    const [singleItem, setSingleItem] = useState({images_urls:[]})
     const [rating, setRating] = useState(0)
     const [reviewForm, setReviewForm] = useState()
     const [hasReview, setHasReview] = useState(null)
-    // console.log(rating)
-    // console.log(review)
-    // console.log(singleItem.review)
-    // console.log(singleItem)
-    console.log(userData)
 
     const { id } = useParams()
     let history = useHistory()
@@ -57,8 +54,10 @@ function MakeReview({user, userData}) {
       }
     
   return (
-    <div>
-      
+    <div className='review-container'>
+      <div>
+        <img src={singleItem.images_urls[0]} style={{width: "400px", height:"500px", objectFit:"fill"}}/>
+      </div>
       {hasReview ? 
       <>
       <h4>Your Review</h4>
@@ -66,17 +65,35 @@ function MakeReview({user, userData}) {
       <p><b>{hasReview.buyer}</b>: "{hasReview.comment}"</p>
       </>
       : 
-      <form onSubmit={handleSubmit}>
-            <label>Leave A Review
-                <Rating onClick={handleRating} ratingValue={rating} />
-                {/* RATING RATING RATING */}
-                <textarea rows="4" cols="50" name="comment" value={reviewForm} onChange={handleChange}/>
-            </label>
-            <input type="submit" value="submit" />
-        </form>
+      <div>
+        <div className='review-form'>
+          <form onSubmit={handleSubmit}>
+              <label>Leave A Review
+                  <Rating onClick={handleRating} ratingValue={rating} fillColor='teal'/>
+                  {/* RATING RATING RATING */}
+                  <Textarea rows="4" cols="50" name="comment" value={reviewForm} onChange={handleChange}/>
+              </label>
+              <Button type="submit" value="submit" colorScheme='teal'>Submit</Button>
+              
+          </form>
+          
+        </div>
+          <div style={{marginLeft:"100px"}}>
+          {userData.id === singleItem.user_id ? 
+            <Link to={`/self`}>
+              <h4>SELLER: {singleItem.seller_name}</h4>
+            </Link>
+            :
+            <Link to={`/user_profile/${singleItem.user_id}`}>
+              <h4>SELLER: {singleItem.seller_name}</h4>
+            </Link>
+          }
+          </div>
+        </div>
+        
       }
-      <p>Sold by: {singleItem.seller_name}</p>
-      <img src={singleItem.image} style={{width: "20%"}}/>
+      <h3>Sold by: {singleItem.seller_name}</h3>
+      
     </div>
   )
 }

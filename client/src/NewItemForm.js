@@ -25,7 +25,7 @@ function NewItemForm({user, newItem}) {
         price:"",
         name:"",
         description:"",
-        image:"",
+        // image:"",
         condition:"",
         user_id: "",
         category_id: ""
@@ -86,23 +86,39 @@ function NewItemForm({user, newItem}) {
     function handleSubmit(e){
         e.preventDefault()
         // const tagArr = 
-        const itemForm = {
-            price: form.price,
-            name:form.name,
-            description:form.description,
-            image: form.image,
-            condition: form.condition,
-            user_id: user.id,
-            category_id: form.category_id 
-        }
+        // const itemForm = {
+        //     price: form.price,
+        //     name:form.name,
+        //     description:form.description,
+        //     // image: form.image,
+        //     condition: form.condition,
+        //     user_id: user.id,
+        //     category_id: form.category_id 
+        // }
+
+        const formData = new FormData()
+        formData.append('item[name]', e.target.name.value)
+        formData.append('item[price]', e.target.price.value)
+        formData.append('item[description]', e.target.description.value)
+        formData.append('item[condition]', e.target.condition.value)
+        formData.append('item[category_id]', form.category_id)
+        formData.append('item[user_id]', user.id)
+        for (let i = 0; i < e.target.images.files.length; i++) {
+            formData.append(
+              'item[images][]',
+              e.target.images.files[i],
+              e.target.images.files[i].name
+            )
+          }
 
         fetch("/items",{
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(itemForm)
+
+            body: formData
         }).then(res => res.json())
           .then(item => {
             newItem(item)
+            console.log(item)
             // setNewItemId(item.id)
             fetch("/tags",{
                 method: 'POST',
@@ -153,9 +169,9 @@ function NewItemForm({user, newItem}) {
             <label>Description
                 <input type="text" name="description" value={form.description} onChange={handleChange}></input>
             </label>
-            <label>Image
+            {/* <label>Image
                 <input type="text" name="image" value={form.image} onChange={handleChange}></input>
-            </label>
+            </label> */}
             <label>Condition
                 <select  name="condition" value={form.condition} onChange={handleChange}>
                     <option>Condition</option>
@@ -201,9 +217,9 @@ function NewItemForm({user, newItem}) {
             </label>
             
             
-            {/* <label>File
-                <input type="file" name="file_upload" onChange={handleFile} />
-            </label> */}
+            <label>File
+                <input type="file" name="images" multiple/>
+            </label>
             <Button type="submit" value="Submit">Submit</Button>
         </form>
 

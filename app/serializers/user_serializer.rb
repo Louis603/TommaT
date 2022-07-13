@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :average_score, :sold_count, :sold_money, :review_count, :latest_review
+  attributes :id, :username, :average_score, :sold_count, :sold_money, :review_count, :latest_review, :avatar_url
 
   has_many :items
   has_many :reviews

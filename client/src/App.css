@@ -69,10 +69,10 @@ input{
 
 .user-stats{
   /* border: solid 2px Teal; */
-  display: inline-block;
+  display: flex;
   margin-left: 700px;
   padding: 5px;
-  width: 700px;
+  max-width: 700px;
   /* height: 100px */
 
 }
@@ -83,7 +83,6 @@ input{
   padding: 10px;
   border: solid 2px teal;
   border-radius: 5px;
-  margin-right: 3px;
   font-weight: 100;
   
 }
@@ -92,6 +91,23 @@ input{
   text-align: center;
   color: rgb(83, 83, 94);
   font-weight: bold;
+  width: 180px;
+  height:50px;
+  margin-left: -5px;
+}
+
+.stat-div1{
+  /* width: 300px; */
+}
+
+.stat-div2{
+  /* width: 300px; */
+}
+
+.stat-div3{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .welcome{
@@ -104,22 +120,45 @@ input{
   flex-wrap: wrap;
   height: auto;
   width: auto;
-  width: 65%;
+  width: 70%;
   justify-content: start;
   margin-left: 15%;
   margin-top: 40px;
 }
 
 .single-item-selling{
-  width: 200px;
-  margin-right: 30px;
+  width: 220px;
+  margin-right: 40px;
   margin-top: 20px;
+  /* overflow: hidden; */
+}
+
+.single-item-selling p{
+  margin-left: 8px;
+  font-weight: bold;
+}
+.single-item-selling h3{
+
+  font-weight: bold;
+}
+
+
+.single-item-selling-img{
+  width: 220px;
+  height: 250px;
+  object-fit: fill;
+}
+
+.single-item-profile-img{
+  width: 300px;
+  height: 320px;
+  object-fit: fill;
 }
 
 .item-focus-container{
   display: flex;
   /* border: solid 5px blue; */
-  margin-left: 15%;
+  margin-left: 25%;
   width: 90%;
 }
 
@@ -195,4 +234,30 @@ input{
 .cart-total-right Button{
   width: 190px;
   margin-left: 10px;
+}
+
+.image-profile-container{
+  height: 100px;
+  width: 100px;
+  margin-left: 52%;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-profile{
+  margin-top: -10px;
+}
+
+.review-container{
+  display: flex;
+  margin-left: 20%;
+  margin-top: 50px;
+}
+
+.review-form{
+  display:flex;
+  width: 500px;
+  margin-left: 100px;
+  margin-bottom: 40px
 }

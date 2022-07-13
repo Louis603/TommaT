@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 import { Divider } from '@chakra-ui/react'
 
 function OneItem({user, userData}) {
-    const [singleItem, setSingleItem] = useState({tags:[]})
+    const [singleItem, setSingleItem] = useState({tags:[], images_urls:[]})
     const { id } = useParams()
 
     // console.log(user.id)
-    console.log(singleItem)
+    console.log(singleItem.images_urls)
 
     useEffect(() =>{
         fetch(`/items/${id}`)
@@ -48,7 +48,7 @@ function OneItem({user, userData}) {
     <div style={{width: "85%", marginTop:"40px"}}>
        <div className='item-focus-container'>
         <div className="item-focus-image">
-          <img src={singleItem.image} style={{width: "600px"}}/>
+          <img src={singleItem.images_urls[0]} style={{width: "600px", height:"700px"}}/>
         </div>
         <div className='item-focus-description'>
           <h1>{singleItem.name}</h1>

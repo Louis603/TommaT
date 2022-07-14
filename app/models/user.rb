@@ -13,6 +13,6 @@ class User < ApplicationRecord
     has_many :order_numbers
     has_one :cart
     
-    # validates :password, length: { minimum: 3 }, allow_nil: true
+    validates :password, length: { minimum: 3 }, allow_nil: true
     validates :username, uniqueness: true
 end

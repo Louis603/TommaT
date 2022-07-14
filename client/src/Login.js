@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import { useHistory } from "react-router-dom"
+import { Input, Container, Button } from '@chakra-ui/react'
 
 
 function Login({setUser, setUserData}) {
+    const [handleError, setHandleError]= useState()
     const [form, setForm] = useState({
         username: "",
         password: ""
@@ -25,7 +27,7 @@ function Login({setUser, setUserData}) {
                 })
             } else {
                 res.json()
-                .then(json => console.log(json.error))
+                .then(json => setHandleError(json.error))
             }
         })
           
@@ -45,19 +47,21 @@ function Login({setUser, setUserData}) {
         setForm({...form, [e.target.name]:e.target.value})
     }
   return (
-    <div> Login
+    <Container style={{marginTop:"50px", width:"400px"}}>
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
             <label>
                 Username
-                <input type="text" name="username" value={form.username} onChange={handleChange}/>
+                <Input type="text" name="username" value={form.username} onChange={handleChange}/>
             </label>
             <label>
                 Password
-                <input type="password"  name="password" value={form.password} onChange={handleChange}/>
+                <Input type="password"  name="password" value={form.password} onChange={handleChange}/>
             </label>
-            <input type="submit" value="Login" />
+            <Button type="submit" value="Login"  colorScheme='teal'>Login</Button>
         </form>
-    </div>
+        <h3>{handleError}</h3>
+    </Container>
   )
 }
 

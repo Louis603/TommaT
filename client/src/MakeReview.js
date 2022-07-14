@@ -59,11 +59,11 @@ function MakeReview({user, userData}) {
         <img src={singleItem.images_urls[0]} style={{width: "400px", height:"500px", objectFit:"fill"}}/>
       </div>
       {hasReview ? 
-      <>
+      <div style={{marginLeft:"30px"}}>
       <h4>Your Review</h4>
-      <Rating readonly="true" ratingValue={hasReview.score} />
+      <Rating readonly="true" ratingValue={hasReview.score} fillColor='teal'/>
       <p><b>{hasReview.buyer}</b>: "{hasReview.comment}"</p>
-      </>
+      </div>
       : 
       <div>
         <div className='review-form'>
@@ -92,7 +92,7 @@ function MakeReview({user, userData}) {
         </div>
         
       }
-      <h3>Sold by: {singleItem.seller_name}</h3>
+      {/* <h3>Sold by: {singleItem.seller_name}</h3> */}
       
     </div>
   )

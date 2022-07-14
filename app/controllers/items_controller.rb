@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable
 
   def index
     items = Item.all
@@ -11,14 +12,14 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = Item.create(item_params)
+    item = Item.create!(item_params)
     render json: item, status: :created
   end
 
 
   def update
     item = find_item
-    item.update!(item_params)
+    item.update!(item_update_params)
     render json: item, status: :created
   end
 
@@ -47,5 +48,14 @@ class ItemsController < ApplicationController
 
     def item_params
       params.require(:item).permit(:price, :name, :description, :condition, :user_id, :category_id, :sold, images: [])
+      # params.permit(:price, :name, :description, :condition, :user_id, :category_id, :sold, images: [])
+    end
+
+    def item_update_params
+      params.permit(:price, :name, :description)
+    end
+
+    def unprocessable(object)
+      render json: {error: "Condition/Category/Price/Title/Description/Images cannot be blank"  }, status: :unprocessable_entity
     end
 end

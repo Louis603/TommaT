@@ -44,9 +44,11 @@ input{
 }
 
 #header{
-  height: 60px;
+  height: 70px;
   display: flex;
-  background-color: #004643;
+  background-color: #18807a;
+  align-items: center;
+  
 }
 
 .star-svg{
@@ -171,12 +173,12 @@ input{
 }
 
 .item-focus-description{
-  margin-left: 100px;
+  margin-left: 50px;
   width: 600px;
 }
 
 .item-focus-description h1, h2, h3{
-  padding: 10px;
+  padding-bottom: 10px;
 }
 
 .item-focus-small{

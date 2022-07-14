@@ -27,10 +27,10 @@ function Item({item, user, userData}) {
       {/* {allTags} */}
 
       <Link to={`/items/${id}`}>
-      <img src={images_urls[0]} className='single-item-selling-img'></img>
+        <img src={images_urls[0]} className='single-item-selling-img'></img>
       </Link>
 
-      <h3>{name}</h3>
+      <h3 style={{height:"100px", textOverflow:"ellipsis", whiteSpace:"nowrap", overflow:'hidden'}}>{name}</h3>
       <p>${price}</p>
     </div>
 

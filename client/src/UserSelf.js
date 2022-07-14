@@ -5,8 +5,10 @@ import { Button, ButtonGroup } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 
-function UserSelf({user, userData}) {
+function UserSelf({user, userData, handleDelete}) {
     const [rating, setRating] = useState(0)
+
+
 
     // console.log(userData.order_numbers)
     // console.log(userData.items)
@@ -20,10 +22,19 @@ function UserSelf({user, userData}) {
                 <img src={item.images_urls[0]} className='single-item-profile-img'/>
                 <h3>{item.name}</h3>
                 <p>${item.price}</p>
+                <Link to={`update_item/${item.id}`}>
+                    <Button 
+                        style={{marginTop: "5px"}}
+                        colorScheme='teal' size='sm'
+                        >Update Item
+                    </Button>
+                </Link>
                 <Button 
                     style={{marginTop: "5px"}}
-                    colorScheme='teal' size='sm'
-                    >See more
+                    colorScheme='red' 
+                    size='sm'
+                    onClick={()=>handleDelete(item)}
+                    >Delete
                 </Button>
             </div>
         )
@@ -45,7 +56,7 @@ function UserSelf({user, userData}) {
     })
 
     const bought = userData.order_numbers.map(order => {
-        console.log(order)
+        // console.log(order)
         return(
             <div key={order.id} className="single-item-div">
                 <img src={order.images_urls} className='single-item-profile-img'></img>
@@ -78,10 +89,11 @@ function UserSelf({user, userData}) {
                         <h2>Sold items
                         <h3>{userData.sold_count}</h3>
                         </h2>
+                        {/* <h3>{userData.sold_count}</h3> */}
                     </div>
                     <div>
                         <h2>Money Earned
-                            <h3>{userData.sold_money}</h3>
+                            <h3>${userData.sold_money}</h3>
                         </h2>
                     </div>
                     <div className='stat-div3'>

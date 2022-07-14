@@ -3,9 +3,10 @@ import {NavLink} from 'react-router-dom'
 import { useHistory } from "react-router-dom"
 import './tags.css'
 import './App.css';
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, Avatar } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { SearchIcon } from '@chakra-ui/icons'
 
 
 
@@ -14,7 +15,7 @@ let link = {
   color: "white"
 }
 
-function Header({user, handleLogout, handleSearch }) {
+function Header({user, userData, handleLogout, handleSearch }) {
   const [ searchNameForm, setSearchNameForm] = useState("")
   const [ searchTagForm, setSearchTagForm] = useState("")
   const [tags, setTags] = useState([])
@@ -122,11 +123,15 @@ function Header({user, handleLogout, handleSearch }) {
   return (
     <div>
     <div id='header'>
+      <NavLink to='/' style={link}>
+        <h1>TommaT</h1>
+      </NavLink>
+      <div style={{display:"flex", position:"absolute", right:"15px"}}>
         <ul className='header-link'>
-            <NavLink to='/' style={link}><b>Home</b></NavLink>
+            <NavLink to='/' style={link}><b>Buy</b></NavLink>
         </ul>
         <ul className='header-link'>
-            <NavLink to='/new_item' style={link}><b>Add New</b></NavLink>
+            <NavLink to='/new_item' style={link}><b>List an Item</b></NavLink>
         </ul>
         <ul className='header-link'>
             <NavLink to='/self' style={link}><b>Profile</b></NavLink>
@@ -134,25 +139,42 @@ function Header({user, handleLogout, handleSearch }) {
         <ul className='header-link'>
             <NavLink to='/cart' style={link}><b>Cart</b></NavLink>
         </ul>
-        {user? (
-          null
+      
+
+
+
+        {user ? (
+          <NavLink to='/self' style={link}>
+            <Avatar name={userData.username} src={userData.avatar_url}/>
+          </NavLink>
           ):( 
-        <ul style={link}>
+        <ul className='header-link'>
             <NavLink to='/login'style={link}><b>Login</b></NavLink> /
             <NavLink to='/signup'style={link}><b>Signup</b></NavLink>
         </ul> 
         )}
-        {user? (<Button style={{marginLeft: "15%", height:"25px", marginTop: "13px"}}
-        onClick={handleLogout}>Logout</Button>
-        ) : null}
+
+      </div>
         
+        
+
+
+
+
     </div>
       
       <Tabs colorScheme="teal">
+
+  
         <TabList>
+          
           <Tab>Categories</Tab>
           <Tab>Search by name</Tab>
           <Tab>Search by tag</Tab>
+          {user? (<Button style={{marginLeft: "74%", height:"25px", marginTop:"7px"}} colorScheme='teal'
+            onClick={handleLogout}>Logout</Button>
+            ) : null}
+
         </TabList>
 
         <TabPanels>
@@ -168,7 +190,7 @@ function Header({user, handleLogout, handleSearch }) {
               <label>
                 <Input htmlSize={45} width='auto' type="text" name="searchName" value={searchNameForm} onChange={handleSearchName}></Input>
               </label>
-              <Button style={{margin: "auto"}} colorScheme='teal' size='sm' type='submit'>Submit</Button>
+              <Button style={{margin: "auto", height:"38px"}} colorScheme='teal' size='sm' type='submit'><SearchIcon /> </Button>
             </form>
           </TabPanel>
           
@@ -200,42 +222,11 @@ function Header({user, handleLogout, handleSearch }) {
                   {tagSuggestions}
                 </datalist>
             </form>
-            <Button onClick={handleTagSubmit}  style={{marginTop: '-32px',marginLeft:"100px", display:"flex"}} colorScheme='teal' size='sm' type='submit'>Submit</Button>
+            <Button onClick={handleTagSubmit}  style={{marginTop: '-32px',marginLeft:"100px", display:"flex"}} colorScheme='teal' size='sm' type='submit'><SearchIcon /></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
       
-      {/* <form onSubmit={handleNameSubmit}>
-        <label>Search Name
-          <Input htmlSize={45} width='auto' type="text" name="searchName" value={searchNameForm} onChange={handleSearchName}></Input>
-        </label>
-        <Button style={{margin: "auto"}} colorScheme='teal' size='sm'>Submit</Button>
-      </form>
-      
-      
-      
-      <form onSubmit={handleTagSubmit}>
-        <label>Search Tag
-          <div className='tags-input'>
-          <ul id='tags'>
-            {tagForm.map(tag => {
-                return (
-                  <li className='tag'>
-                    <span className='tag-title' >{tag} </span>
-                    <span className='tag-close-icon' onClick={(e) => handleDelete(tag)}>x</span>
-                  </li>)
-              })}
-            </ul>
-          <input className='tags-input-form' type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
-          <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
-          </div>
-        </label>
-          <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm'>Submit</Button>
-        
-        <datalist id="data">
-          {tagSuggestions}
-        </datalist>
-      </form> */}
     </div>
   )
 }

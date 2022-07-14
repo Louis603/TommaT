@@ -15,10 +15,12 @@ import MakeReview from './MakeReview';
 import UserOther from './UserOther';
 import SearchResults from './SearchResults';
 import Test from './Test';
+import UpdateItem from './UpdateItem';
 import {theme} from './Theme';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
+  const [listedItem, setListedItem] = useState(null)
   // console.log(soldBoolean)
   const [itemsArr, setItemsArr] = useState([]);
   const [searchItemsArr, setSearchItemsArr] = useState([]);
@@ -43,7 +45,7 @@ function App() {
           // console.log("user check fetch")
         });
       }});
-  }, [soldBoolean]);
+  }, [soldBoolean, listedItem]);
 
   useEffect(() => {
     fetch("/items")
@@ -61,6 +63,15 @@ function App() {
       history.push('/')
   }
 
+  //handles deleted item from userSelf
+  function handleDelete(item){
+    fetch(`/items/${item.id}`, {
+      method: "DELETE",
+    })
+        // setListedItem(!listedItem)
+        setSoldBoolean(!soldBoolean)
+  }
+
   function newItem(data){
     setItemsArr([...itemsArr, data])
   }
@@ -71,10 +82,18 @@ function App() {
     setItemsArr(boughtItem)
   }
 
+  function handleUpdatedItem(data){
+    const updateItem = itemsArr.map(item => item.id === data.id ? data : item )
+    setItemsArr(updateItem)
+    console.log(itemsArr)
+  }
+
   function handleSearch(data){
     setSearchItemsArr(data)
     console.log(searchItemsArr)
   }
+
+
   return (
     <ChakraProvider 
     theme={theme}
@@ -82,7 +101,7 @@ function App() {
     >
     
       <div className="App">
-        <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
+        <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch} userData={userData}/>
         {/* {user ? <h2>{user.username}</h2> : <h1>Not logged in</h1>} */}
         <Switch>
           
@@ -95,7 +114,7 @@ function App() {
           </Route>
           
           <Route path="/self">
-            <UserSelf user={user} userData={userData}/>
+            <UserSelf user={user} userData={userData} handleDelete={handleDelete}/>
           </Route>
           
           <Route path="/cart">
@@ -108,7 +127,7 @@ function App() {
           </Route>
           
           <Route path="/new_item">
-            <NewItemForm user={user} newItem={newItem}/>
+            <NewItemForm user={user} newItem={newItem} setListedItem={setListedItem} listedItem={listedItem}/>
           </Route>
           
           <Route path="/items/:id">
@@ -120,15 +139,19 @@ function App() {
           </Route>
           
           <Route path="/user_profile/:id">
-            <UserOther user={user} userData={userData}/>
+            <UserOther user={user} userData={userData} />
           </Route>
           
           <Route path="/search_results">
             <SearchResults user={user} userData={userData} searchItemsArr={searchItemsArr}/>
           </Route>
           
-          <Route path="/test">
-            <Test user={user} userData={userData} searchItemsArr={searchItemsArr}/>
+          <Route path="/update_item/:id">
+            <UpdateItem user={user} 
+              userData={userData} 
+              setListedItem={setListedItem} 
+              handleUpdatedItem={handleUpdatedItem} 
+              listedItem={listedItem}/>
           </Route>
 
         </Switch>

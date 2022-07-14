@@ -9,6 +9,7 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
     const [purchased, setPurchased] = useState(null)
     // const [totalPrice, setTotalPrice] = useState(0)
     console.log(userCart)
+    // let test = userCart.map(i => console.log(i.item))
     
     // useEffect(() => {
     //     fetch("/me")
@@ -25,9 +26,20 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
     useEffect(() => {
         fetch(`/carts/${userData.id}`)
         .then(resp => resp.json())
-        .then((data) => {
+        .then(data => {
+          if(data.error){
+            console.log(data.error)
+          }else{
           // setPurchased(null)
-          setUserCart(data)})
+          setUserCart(data)
+          }
+        })
+        
+        
+        
+        // .then((data) => {
+        //   // setPurchased(null)
+        //   setUserCart(data)})
       }, [userData]);
 
       function handleBuy(){
@@ -81,7 +93,7 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
               <Link to={`/items/${i.item.id}`}>
                 <img src={i.item.images_urls[0]} style={{width: "150px"}}/>
               </Link>
-                <div style={{width:"275px"}}>
+                <div style={{width:"275px", marginLeft:"20px"}}>
                   <h3>{i.item.name}</h3>
                   <p>${i.item.price}</p>
                 </div>

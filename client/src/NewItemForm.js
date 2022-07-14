@@ -2,14 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useHistory } from "react-router-dom"
 import './tags.css'
 import './App.css';
-import { Button, ButtonGroup, Input, Textarea, Select, Stack, Kbd    } from '@chakra-ui/react'
-import {
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
-  } from '@chakra-ui/react'
+import { Button, Input, Textarea, Select, Stack, Kbd } from '@chakra-ui/react'
 import { AttachmentIcon } from '@chakra-ui/icons'
 
 
@@ -24,7 +17,8 @@ const tagStyle = {
 	borderRadius: "6px"
 	}
 
-function NewItemForm({user, newItem}) {
+function NewItemForm({user, newItem, setListedItem, listedItem}) {
+    const [handleError, setHandleError] = useState()
     const [selectedImage, setSelectedImage] = useState(null);
     const [testTag, setTestTag] = useState()
     const [newItemId, setNewItemId] = useState(null)
@@ -43,6 +37,11 @@ function NewItemForm({user, newItem}) {
     const [imageDisplay, setImageDisplay] = useState([])
 
     let history = useHistory()
+
+    // useEffect(() => {
+    //     console.log(imageDisplay)
+    // },[imageDisplay])
+    // console.log(imageDisplay)
 
     useEffect(() => {
         fetch("/categories")
@@ -90,12 +89,13 @@ function NewItemForm({user, newItem}) {
             // setImageDisplay([...imageDisplay, e.target.files[i]])
             imageArray.push(e.target.files[i])
         }
-        setImageDisplay(imageArray)
+        let imageLinks = imageArray.map(image => URL.createObjectURL(image))
+        setImageDisplay(imageLinks)
     }
 
     const imageUploadDisplay = imageDisplay.map(image => {
         return (
-            <img className='thumbnail-image-upload' src={URL.createObjectURL(image)}></img>
+            <img key={image} className='thumbnail-image-upload' src={image}></img>
         )
     })
 
@@ -133,17 +133,31 @@ function NewItemForm({user, newItem}) {
             body: formData
         }).then(res => res.json())
           .then(item => {
-            newItem(item)
-            console.log(item)
+            if(item.error){
+                setHandleError(item.error)
+            } else {
+                newItem(item)
+                console.log(item)
+                setListedItem(!listedItem)
+                history.push('/')
+            }
+
+
+
+            // newItem(data)
+            // console.log(data)
+            // setListedItem(true)
             // setNewItemId(item.id)
-            fetch("/tags",{
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    tags: tagForm
-                })
-            }).then(res => res.json())
-              .then(data => {
+            
+            
+        fetch("/tags",{
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                tags: tagForm
+            })
+        }).then(res => res.json())
+          .then(data => {
                 data.map(d => {
                     fetch("/item_tags",{
                         method: 'POST',
@@ -173,6 +187,7 @@ function NewItemForm({user, newItem}) {
     
   return (
     <div style={{display:"flex"}}>
+        {/* {imageUploadDisplay} */}
     <div className='form-container'>
         {/* {selectedImage? <img src={URL.createObjectURL(selectedImage)}></img> : null} */}
         {/* {imageUploadDisplay} */}
@@ -186,7 +201,7 @@ function NewItemForm({user, newItem}) {
                     <h4 style={{marginLeft:"22%", padding:"10px"}}> Hold <Kbd>ctrl</Kbd> or <Kbd>⌘</Kbd> + <Kbd>mouse click</Kbd> to select more than one image</h4>
 
                     <Input type="file" name="images" multiple display='none'
-                    onChange={handleFile}
+                    onChange={(e)=>handleFile(e)}
                     />
                 </label>
             
@@ -258,7 +273,7 @@ function NewItemForm({user, newItem}) {
                 <ul id='tags'>
                     {tagForm.map(tag => {
                         return (
-                        <li className='tag'>
+                        <li className='tag' key={tag}>
                             <span className='tag-title' >{tag} </span>
                             <span className='tag-close-icon' onClick={(e) => handleDelete(tag)}>x</span>
                         </li>)
@@ -293,12 +308,13 @@ function NewItemForm({user, newItem}) {
                 colorScheme='teal'
                 >Submit</Button>
         </form>
-
+        <h4>{handleError}</h4>
         {/* <Input onChange={handleImage} type="file" id="image" /> */}
         </div>
         <div className='thumbnail-upload-container'>
             {imageUploadDisplay}
         </div>
+        
     </div>
   )
 }

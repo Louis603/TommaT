@@ -4,20 +4,10 @@ import './tags.css'
 import './App.css';
 import { Button, Input, Textarea, Select, Stack, Kbd } from '@chakra-ui/react'
 import { AttachmentIcon } from '@chakra-ui/icons'
+import Login from './Login';
 
 
-const tagStyle = {
-	display: "flex",
-	alignItems: "flex-start",
-	flexWrap: "wrap",
-	minHeight: "48px",
-	width: "480px",
-	padding: "0 8px",
-	border:" 1px solid rgb(214, 216, 218)",
-	borderRadius: "6px"
-	}
-
-function NewItemForm({user, newItem, setListedItem, listedItem}) {
+function NewItemForm({user, newItem, setListedItem, listedItem, setUser, setUserData}) {
     const [handleError, setHandleError] = useState()
     const [selectedImage, setSelectedImage] = useState(null);
     const [testTag, setTestTag] = useState()
@@ -57,7 +47,6 @@ function NewItemForm({user, newItem, setListedItem, listedItem}) {
 
     function handleChange(e){
         setForm({...form, [e.target.name]:e.target.value})
-        // console.log(form)
     }
 
     function handleTagChange(e){
@@ -184,7 +173,7 @@ function NewItemForm({user, newItem, setListedItem, listedItem}) {
     })
 
     
-    
+  if(!user) return <Login setUser={setUser} setUserData={setUserData}></Login>
   return (
     <div style={{display:"flex"}}>
         {/* {imageUploadDisplay} */}

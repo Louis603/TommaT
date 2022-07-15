@@ -113,7 +113,7 @@ function Cart({user, userData, setSoldBoolean, handleBought}) {
     <div style={{
       // border: "solid 1px red", 
       width:"40%", marginLeft:"22%", marginTop:"30px"}}>
-        {user? <p>true</p> : <p>false</p>}
+        {user? null: <p>SignUp To Buy </p>}
         {cartItems}
         {/* <div className='cart-total-right'>
           <h2>Total: ${totalPrice}</h2>

@@ -14,8 +14,8 @@ import Cart from './Cart';
 import MakeReview from './MakeReview';
 import UserOther from './UserOther';
 import SearchResults from './SearchResults';
-import Test from './Test';
 import UpdateItem from './UpdateItem';
+import Footer from './Footer';
 import {theme} from './Theme';
 
 function App() {
@@ -72,6 +72,13 @@ function App() {
         setSoldBoolean(!soldBoolean)
   }
 
+  function handleDeleteWish(like){
+    fetch(`/likes/${like.id}`, {
+      method: "DELETE",
+    })
+        setSoldBoolean(!soldBoolean)
+  }
+
   function newItem(data){
     setItemsArr([...itemsArr, data])
   }
@@ -100,7 +107,7 @@ function App() {
     // resetCSS={false}
     >
     
-      <div className="App">
+      <div className="App" >
         <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch} userData={userData}/>
         {/* {user ? <h2>{user.username}</h2> : <h1>Not logged in</h1>} */}
         <Switch>
@@ -114,7 +121,7 @@ function App() {
           </Route>
           
           <Route path="/self">
-            <UserSelf user={user} userData={userData} handleDelete={handleDelete}/>
+            <UserSelf user={user} userData={userData} handleDelete={handleDelete} handleDeleteWish={handleDeleteWish}/>
           </Route>
           
           <Route path="/cart">
@@ -127,7 +134,13 @@ function App() {
           </Route>
           
           <Route path="/new_item">
-            <NewItemForm user={user} newItem={newItem} setListedItem={setListedItem} listedItem={listedItem}/>
+            <NewItemForm 
+              user={user} 
+              newItem={newItem} 
+              setListedItem={setListedItem} 
+              listedItem={listedItem}
+              setUser={setUser} 
+              setUserData={setUserData}/>
           </Route>
           
           <Route path="/items/:id">
@@ -155,7 +168,7 @@ function App() {
           </Route>
 
         </Switch>
-          
+        <Footer />
       </div>
     </ChakraProvider>
   );

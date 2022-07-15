@@ -22,7 +22,7 @@ function OneItem({user, userData}) {
         .then(resp => resp.json())
         .then((data) => {
           setSingleItem(data)
-          setForm({...form, user_id: 1, item_id: data.id})
+          setForm({...form, user_id: userData.id, item_id: data.id})
           setDisplayImage(data.images_urls[0])
         })
       }, []);
@@ -143,8 +143,8 @@ function OneItem({user, userData}) {
         <div className='item-focus-description'>
           <h1>{singleItem.name}</h1>
           <h2>${singleItem.price}</h2>
-          <h2>DESCRIPTION 
-          <p>{singleItem.description}</p></h2>
+          <h3>DESCRIPTION 
+          <p>{singleItem.description}</p></h3>
           <h3 style={{marginBottom:"20px", width:"100px"}}>
             Sold By:
             {userData.id === singleItem.user_id ? 

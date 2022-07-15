@@ -30,7 +30,7 @@ function Item({item, user, userData}) {
         <img src={images_urls[0]} className='single-item-selling-img'></img>
       </Link>
 
-      <h3 style={{height:"100px", textOverflow:"ellipsis", whiteSpace:"nowrap", overflow:'hidden'}}>{name}</h3>
+      <h3 style={{height:"60px", textOverflow:"ellipsis", whiteSpace:"nowrap", overflow:'hidden'}}>{name}</h3>
       <p>${price}</p>
     </div>
 

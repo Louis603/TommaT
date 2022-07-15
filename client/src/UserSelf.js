@@ -1,17 +1,29 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { Rating } from 'react-simple-star-rating'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, Avatar } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 
-function UserSelf({user, userData, handleDelete}) {
+function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
     const [rating, setRating] = useState(0)
+    const [likeArr, setLikeArr] = useState([])
+    
+
+    useEffect(() =>{
+        fetch(`/likes/${userData.id}`)
+            .then(resp => {
+                if(resp.ok){
+                    resp.json()
+                    .then(data => setLikeArr(data))
+                }
+            })
+
+            // resp.json())
+            // .then(data => setLikeArr(data))
+    },[userData, handleDeleteWish])
 
 
-
-    // console.log(userData.order_numbers)
-    // console.log(userData.items)
     const soldFilter = userData.items.filter(item => item.sold === true)
     const sellingFilter = userData.items.filter(item => item.sold !== true)
     // console.log(soldFilter.length)
@@ -67,41 +79,72 @@ function UserSelf({user, userData, handleDelete}) {
         )
     })
 
+    const wishlist = likeArr.map(like => {
+        return (
+            <div key={like.id} className="single-item-div"> 
+                <img src={like.item.images_urls[0]} className='single-item-profile-img'/>
+                <h3>{like.item.name}</h3>
+                <p>${like.item.price}</p>
+                <Link to={`/items/${like.item.id}`}>
+                    <Button 
+                    style={{marginTop: "5px"}}
+                    colorScheme='teal' size='sm'
+                    >View Item</Button>
+                </Link>
+                <Button 
+                    style={{marginTop: "5px"}}
+                    colorScheme='red' 
+                    size='sm'
+                    onClick={()=>handleDeleteWish(like)}
+                    >Remove From Wishlist
+                </Button>
+            </div>
+        )
+    })
+
 
   return (
     <div style={{width: "85%"}}>
     {user ? (
         <div style={{marginLeft: "20px"}}>
+            
             <div style={{display:"flex"}}>
                 <h2 className='welcome'>Welcome Back {userData.username}</h2>
-                <div className='image-profile-container' >
-                <img className='image-profile' src={userData.avatar_url}></img>
-                </div>
             </div>
+            
             <h3>Your Seller Rating</h3>
+            
             <div style={{display:"flex"}}>
+                
                 <div style={{marginTop:"11px"}}>
                     <Rating ratingValue={userData.average_score} readonly="true" fillColor='teal'/>
                     <p>{userData.average_score} /100</p>
                 </div>
-                <div className='user-stats'>
-                    <div>
-                        <h2>Sold items
+                
+                <Avatar 
+                    size='xl' 
+                    style={{ marginLeft:"40px", marginTop:"10px"}}
+                    name={userData.username}
+                    src={userData.avatar_url}
+                ></Avatar>
+                
+                <div className='stat-container'>
+                    <div className='stat-div1'>
+                        <h2>Sold items</h2>
                         <h3>{userData.sold_count}</h3>
-                        </h2>
-                        {/* <h3>{userData.sold_count}</h3> */}
                     </div>
-                    <div>
-                        <h2>Money Earned
-                            <h3>${userData.sold_money}</h3>
-                        </h2>
+                    <div className='stat-div2'>
+                        <h2>Money Earned</h2>
+                        <h3>${userData.sold_money}</h3>
                     </div>
+                    
                     <div className='stat-div3'>
-                        <h2>Latest Review
-                            {userData.latest_review ? <h3>{userData.latest_review}</h3> : <h3>None</h3>}
-                        </h2>
+                        <h2>Latest Review</h2>
+                        {userData.latest_review ? <h3>{userData.latest_review}</h3> : <h3>No Reviews</h3>}
                     </div>
+                
                 </div>
+            
             </div>
 
         <Tabs colorScheme="teal">
@@ -109,12 +152,13 @@ function UserSelf({user, userData, handleDelete}) {
                 <Tab>Selling</Tab>
                 <Tab>Sold</Tab>
                 <Tab>Bought</Tab>
+                <Tab>Wishlist</Tab>
             </TabList>
 
             <TabPanels>
                 <TabPanel>
                 <div style={{marginLeft: "10%", marginTop:"30px"}}>
-                    <h3>SELLING</h3>
+                    <h3>Selling</h3>
                     {sellingFilter.length === 0 ? ( null) : (
                         <div className="user-profile-item">
                             {selling}
@@ -124,7 +168,7 @@ function UserSelf({user, userData, handleDelete}) {
                 </TabPanel>
                 <TabPanel>
                 <div style={{marginLeft: "10%", marginTop:"30px"}}>
-                    <h3>SOLD</h3>
+                    <h3>Sold</h3>
                     {soldFilter.length === 0 ? ( null) : (
                         <div className="user-profile-item">
                             {sold}
@@ -141,6 +185,17 @@ function UserSelf({user, userData, handleDelete}) {
                         </div>
                     )}
                 </div>
+                </TabPanel>
+                <TabPanel>
+                    <div style={{marginLeft: "10%", marginTop:"30px"}}>
+                        <h3>Wishlist</h3>
+
+                            <div className="user-profile-item">
+                                {wishlist}
+                            </div>
+
+                    </div>
+
                 </TabPanel>
 
             </TabPanels>

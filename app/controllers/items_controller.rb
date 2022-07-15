@@ -52,7 +52,7 @@ class ItemsController < ApplicationController
     end
 
     def item_update_params
-      params.permit(:price, :name, :description)
+      params.permit(:price, :name, :description, :sold)
     end
 
     def unprocessable(object)

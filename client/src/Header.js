@@ -35,6 +35,7 @@ function Header({user, userData, handleLogout, handleSearch }) {
     .then(data => setCategoryArr(data))
   },[])
 
+
   const tagSuggestions = tags.map(tag => {
     return <option key={tag.id} value={tag.hashtag} />
   })
@@ -124,18 +125,18 @@ function Header({user, userData, handleLogout, handleSearch }) {
     <div>
     <div id='header'>
       <NavLink to='/' style={link}>
-        <h1>TommaT</h1>
+        <h1 style={{marginLeft:"5px"}}>TommaT</h1>
       </NavLink>
-      <div style={{display:"flex", position:"absolute", right:"15px"}}>
+      <div style={{display:"flex", position:"absolute", right:"25px"}}>
         <ul className='header-link'>
             <NavLink to='/' style={link}><b>Buy</b></NavLink>
         </ul>
         <ul className='header-link'>
             <NavLink to='/new_item' style={link}><b>List an Item</b></NavLink>
         </ul>
-        <ul className='header-link'>
+        {/* <ul className='header-link'>
             <NavLink to='/self' style={link}><b>Profile</b></NavLink>
-        </ul>
+        </ul> */}
         <ul className='header-link'>
             <NavLink to='/cart' style={link}><b>Cart</b></NavLink>
         </ul>

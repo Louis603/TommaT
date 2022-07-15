@@ -3,7 +3,6 @@ class UserSerializer < ActiveModel::Serializer
 
   has_many :items
   has_many :reviews
-  has_many :likes
   has_many :order_numbers
   has_one :cart
 

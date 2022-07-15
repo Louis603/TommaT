@@ -14,20 +14,21 @@ import Cart from './Cart';
 import MakeReview from './MakeReview';
 import UserOther from './UserOther';
 import SearchResults from './SearchResults';
-import Test from './Test';
+import UpdateItem from './UpdateItem';
+import Footer from './Footer';
 import {theme} from './Theme';
 
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
-  // console.log(soldBoolean)
+  const [listedItem, setListedItem] = useState(null)
   const [itemsArr, setItemsArr] = useState([]);
   const [searchItemsArr, setSearchItemsArr] = useState([]);
   const [user, setUser] = useState(null)
   const [userData, setUserData] = useState({ 
     items:[], 
-    order_numbers:[], 
+    order_numbers:[],
+    images_urls:[], 
     reviews:[]})
-  // console.log(user.cart)
   let history = useHistory()
 
   useEffect(() => {
@@ -39,10 +40,9 @@ function App() {
           setUser(data)
           setUserData(data)
           console.log(data)
-          // console.log("user check fetch")
         });
       }});
-  }, [soldBoolean]);
+  }, [soldBoolean, listedItem]);
 
   useEffect(() => {
     fetch("/items")
@@ -60,29 +60,49 @@ function App() {
       history.push('/')
   }
 
+  //handles deleted item from userSelf
+  function handleDelete(item){
+    fetch(`/items/${item.id}`, {
+      method: "DELETE",
+    })
+        // setListedItem(!listedItem)
+        setSoldBoolean(!soldBoolean)
+  }
+
+  function handleDeleteWish(like){
+    fetch(`/likes/${like.id}`, {
+      method: "DELETE",
+    })
+        setSoldBoolean(!soldBoolean)
+  }
+
   function newItem(data){
     setItemsArr([...itemsArr, data])
   }
 
   function handleBought(data){
     const boughtItem = itemsArr.filter(item => item.id !== data)
-    console.log(boughtItem)
     setItemsArr(boughtItem)
+  }
+
+  function handleUpdatedItem(data){
+    const updateItem = itemsArr.map(item => item.id === data.id ? data : item )
+    setItemsArr(updateItem)
   }
 
   function handleSearch(data){
     setSearchItemsArr(data)
-    console.log(searchItemsArr)
   }
+
+
   return (
     <ChakraProvider 
     theme={theme}
     // resetCSS={false}
     >
     
-      <div className="App">
-        <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch}/>
-        {/* {user ? <h2>{user.username}</h2> : <h1>Not logged in</h1>} */}
+      <div className="App" >
+        <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch} userData={userData}/>
         <Switch>
           
           <Route path="/login">
@@ -94,7 +114,7 @@ function App() {
           </Route>
           
           <Route path="/self">
-            <UserSelf user={user} userData={userData}/>
+            <UserSelf user={user} userData={userData} handleDelete={handleDelete} handleDeleteWish={handleDeleteWish}/>
           </Route>
           
           <Route path="/cart">
@@ -107,7 +127,13 @@ function App() {
           </Route>
           
           <Route path="/new_item">
-            <NewItemForm user={user} newItem={newItem}/>
+            <NewItemForm 
+              user={user} 
+              newItem={newItem} 
+              setListedItem={setListedItem} 
+              listedItem={listedItem}
+              setUser={setUser} 
+              setUserData={setUserData}/>
           </Route>
           
           <Route path="/items/:id">
@@ -119,19 +145,23 @@ function App() {
           </Route>
           
           <Route path="/user_profile/:id">
-            <UserOther user={user} userData={userData}/>
+            <UserOther user={user} userData={userData} />
           </Route>
           
           <Route path="/search_results">
             <SearchResults user={user} userData={userData} searchItemsArr={searchItemsArr}/>
           </Route>
           
-          <Route path="/test">
-            <Test user={user} userData={userData} searchItemsArr={searchItemsArr}/>
+          <Route path="/update_item/:id">
+            <UpdateItem user={user} 
+              userData={userData} 
+              setListedItem={setListedItem} 
+              handleUpdatedItem={handleUpdatedItem} 
+              listedItem={listedItem}/>
           </Route>
 
         </Switch>
-          
+        <Footer />
       </div>
     </ChakraProvider>
   );

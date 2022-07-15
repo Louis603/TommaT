@@ -1,9 +1,8 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :username, :average_score, :sold_count, :sold_money, :review_count, :latest_review
+  attributes :id, :username, :average_score, :sold_count, :sold_money, :review_count, :latest_review, :avatar_url
 
   has_many :items
   has_many :reviews
-  has_many :likes
   has_many :order_numbers
   has_one :cart
 
@@ -16,13 +15,6 @@ class UserSerializer < ActiveModel::Serializer
     else
       0
     end
-    # rating_sum = self.object.reviews.pluck(:score).sum
-    # count = self.object.reviews.count
-    # score = rating_sum/count
-    # "#{score.to_f}"
-    # ratingMap = self.object.reviews.map { |review| rating = review.score + rating}
-    # "#{rating}"
-    # self.object.username
   end
 
   def sold_count

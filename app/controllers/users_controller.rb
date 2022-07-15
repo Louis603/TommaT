@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable
+
+
     def show
         user = User.find_by(id: session[:user_id])
         if user
@@ -15,6 +18,7 @@ class UsersController < ApplicationController
 
     def create
         user = User.create!(user_params)
+        # byebug
         session[:user_id] = user.id
         render json: user, status: :created
     end
@@ -28,6 +32,11 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :password)
+        # params.permit(:username, :password)
+        params.require(:user).permit(:username, :password, :avatar)
+    end
+
+    def unprocessable(object)
+        render json: {error: "Must include avatar"  }, status: :unprocessable_entity
     end
 end

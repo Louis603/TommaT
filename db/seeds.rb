@@ -6,22 +6,30 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-pokemon_image = 'https://media.gamestop.com/i/gamestop/11120694/Pokemon-Legends-Arceus---Nintendo-Switch?$pdp$'
+
+# pokemon_image = 'https://media.gamestop.com/i/gamestop/11120694/Pokemon-Legends-Arceus---Nintendo-Switch?$pdp$'
 
 # category
-game = Category.create!(name: "Video Game")
+Category.create!(name: "Video Games")
+Category.create!(name: "Electronics")
+Category.create!(name: "Toys")
+Category.create!(name: "Trading Cards")
+Category.create!(name: "Sports")
+Category.create!(name: "Clothing")
+Category.create!(name: "Home")
+Category.create!(name: "Books")
 
 ###  USERS
-louis = User.create!(username:"Louis", password:"123")
+# louis = User.create!(username:"Louis", password:"123")
 
 #items
-game = Item.create!(price: 23.99, name:"pokemon", description:"good game", image: pokemon_image, condition:"good:", user: louis, category: game)
+# game = Item.create!(price: 23.99, name:"pokemon", description:"good game", image: pokemon_image, condition:"good:", user: louis, category: game)
 
 #tags
-pokemon = Tag.create!(hashtag: "pokemon")
+# pokemon = Tag.create!(hashtag: "pokemon")
 
 #item_tags
-ItemTag.create!(item: game, tag: pokemon)
+# ItemTag.create!(item: game, tag: pokemon)
 
 #reviews
-Review.create!(user: louis, score: 5, comment:"fast shipping")
+# Review.create!(user: louis, score: 5, comment:"fast shipping")

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 function Item({item, user, userData}) {
   const [currentUserId, setCurrentUserId] = useState(1)
-  const {id, price, name, description, image, condition, sold, tags, seller_name, user_id } = item
+  const {id, price, name, description, image, condition, sold, tags, seller_name, user_id, images_urls } = item
   
 
-  const allTags= tags.map(tag => <p key={tag.hashtag}>Tags: {tag.hashtag}</p>)
+  // const allTags= tags.map(tag => <p key={tag.hashtag}>Tags: {tag.hashtag}</p>)
   return (
    
     <div className="single-item-selling">
@@ -25,12 +25,12 @@ function Item({item, user, userData}) {
       </Link> */}
       
       {/* {allTags} */}
-      
+
       <Link to={`/items/${id}`}>
-      <img src={image} style={{width:"300px"}}></img>
-        <button>See more</button>
+        <img src={images_urls[0]} className='single-item-selling-img'></img>
       </Link>
-      <h3>{name}</h3>
+
+      <h3 style={{height:"60px", textOverflow:"ellipsis", whiteSpace:"nowrap", overflow:'hidden'}}>{name}</h3>
       <p>${price}</p>
     </div>
 

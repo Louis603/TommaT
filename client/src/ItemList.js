@@ -20,8 +20,8 @@ function ItemList({itemsArr, user, userData}) {
   })
 
   return (
-    <div>
-      <h1 style={{justifyContent:"start", marginLeft:"10%"}}>Shop Tommat</h1>
+    <div style={{marginBottom:"80px"}}>
+      <h1 style={{justifyContent:"start", marginLeft:"10%"}}>Shop TommaT</h1>
     <div className="selling-page">
         {itemsMapped}
     </div>

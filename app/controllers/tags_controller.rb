@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
 
     def index 
-        tags = Tag.all
+        tags = Tag.all.order(:hashtag)
         render json: tags, status: :ok
     end
 

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import { Button, ButtonGroup, Container, Input, Textarea } from '@chakra-ui/react'
+import { Button, Input, Textarea } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 
 function UpdateItem({user, userData, setListedItem, handleUpdatedItem, listedItem}) {
@@ -25,7 +25,6 @@ function UpdateItem({user, userData, setListedItem, handleUpdatedItem, listedIte
 
   function handleChange(e){
     setForm({...form, [e.target.name]:e.target.value})
-    // console.log(form)
     }
 
   function handleSubmit(e){

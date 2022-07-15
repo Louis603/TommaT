@@ -23,10 +23,7 @@ class TagsController < ApplicationController
         # byebug
         render json: arr, status: :created
     end
-    #     tag = Tag.create!(tag_params)
 
-    #     render json: tag, status: :ok
-    # end
 
     def update
         tag = find_tag
@@ -44,7 +41,6 @@ class TagsController < ApplicationController
         # params = ["ps5", "ps3", "Ponyta"]
         # params_string = "pon"
         result = Tag.where(hashtag: params[:tagSearch])
-        
         search = result.map {|s| s.items}.flatten
         # search2 = Item.where("lower(name) LIKE ?", "%#{params_string.downcase}%")
         render json: search.uniq

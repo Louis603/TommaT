@@ -36,8 +36,6 @@ function Signup({setUser, setUserData}) {
 
     function handleFile(e) {
         let file = e.target.files[0];
-        // console.log(img)
-        // setSelectedImage(img);
         let img = (URL.createObjectURL(file));
         setImageDisplay(img)
     }
@@ -78,16 +76,18 @@ function Signup({setUser, setUserData}) {
                 <Input type="password"  name="password" value={form.password} onChange={handleChange}/>
             </label>
             <Container>
-            <label>
-                
-            <h4 style={{marginLeft:"25%", padding:"10px"}}>Upload Profile Image</h4>
-                    <AttachmentIcon w={8} h={8} color='gray'style={{marginLeft:"45%"}}/>
-                <Input type="file" name="avatar" placeholder="avatar" display='none' onChange={handleFile} ></Input>
-            </label>
+                <label>
+                    
+                <h4 style={{marginLeft:"25%", padding:"10px"}}>Upload Profile Image</h4>
+                        <AttachmentIcon w={8} h={8} color='gray'style={{marginLeft:"45%"}}/>
+                    <Input type="file" name="avatar" placeholder="avatar" display='none' onChange={handleFile} ></Input>
+                </label>
             </Container>
+            
             <Avatar  src={imageDisplay} style={{marginTop:"20px", marginBottom:"20px"}}></Avatar>
+            
             <Container>
-            <Button type="submit" colorScheme='teal'>Signup</Button>
+                <Button type="submit" colorScheme='teal'>Signup</Button>
             </Container>
         </form>
         

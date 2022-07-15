@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
-import { Button, ButtonGroup, useToast  } from '@chakra-ui/react'
+import { Button, useToast  } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { Divider } from '@chakra-ui/react'
 
@@ -14,9 +14,6 @@ function OneItem({user, userData}) {
     const { id } = useParams()
     const toast = useToast()
 
-    // console.log(user.id)
-    // console.log(displayImage)
-
     useEffect(() =>{
         fetch(`/items/${id}`)
         .then(resp => resp.json())
@@ -28,12 +25,6 @@ function OneItem({user, userData}) {
       }, []);
 
     function handleClick(){
-      // setForm({...form, user_id: 1, item_id: singleItem.id})
-          // setForm({...form, item_id: singleItem.id})
-      // const form ={
-      //   item_id: singleItem.id,
-      //   user_id: user.id
-      // }
       fetch("/carts",{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,7 +85,6 @@ function OneItem({user, userData}) {
     }
 
     const tags = singleItem.tags.map(tag => <p key={tag.hashtag} className='item-focus-tags'>#{tag.hashtag}</p>)
-    // console.log(singleItem.tags)
 
     let button;
     if(userData.id === singleItem.user_id){
@@ -157,7 +147,6 @@ function OneItem({user, userData}) {
               </Link>
               }
           </h3>
-          {/* {userData.id === singleItem.user_id ? null : <Button onClick={handleClick} colorScheme='teal'>ADD TO CART</Button>} */}
           {button}
           {buttonWishlist}
           <Divider style={{marginTop:"20px"}}/>
@@ -179,7 +168,6 @@ function OneItem({user, userData}) {
             <p>Money Back Guarantee</p>
             <p>Trust me</p>
           </h3>
-      
         </div>
        </div>
     </div>

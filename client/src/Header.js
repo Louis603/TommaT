@@ -57,8 +57,6 @@ function Header({user, userData, handleLogout, handleSearch }) {
   }).then(res => res.json())
     .then(data => {
       handleSearch(data)
-      console.log(data)
-      // history.push('/search_results')
     })
   }
 
@@ -80,7 +78,6 @@ function Header({user, userData, handleLogout, handleSearch }) {
   }).then(res => res.json())
     .then(data => {
       handleSearch(data)
-      console.log(data)
       history.push('/search_results')
     })
   }
@@ -88,103 +85,76 @@ function Header({user, userData, handleLogout, handleSearch }) {
   function handleAddTag(e){
     e.preventDefault()
     if(tagForm.includes(searchTagForm)){
-        console.log("exists")
     }else{
         setTagForm([...tagForm, searchTagForm])}
-    console.log(tagForm)
     setSearchTagForm("")
   }
 
   function handleDelete(tag){
-    console.log(tag)
     const deleteTag = tagForm.filter(t => t !== tag)
     setTagForm(deleteTag)
   }
 
   function handleTagSubmit(e){
     e.preventDefault()
-    console.log(tagForm)
     fetch("/search_tags",{
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({tagSearch: tagForm})
-  }).then(res => res.json())
-    .then(data => {
-      handleSearch(data)
-      console.log(data)
-      setTagForm([])
-      history.push('/search_results')
-      
-      // history.push('/search_results')
+    }).then(res => res.json())
+      .then(data => {
+        handleSearch(data)
+        setTagForm([])
+        history.push('/search_results')
     })
-
   }
 
 
   return (
     <div>
-    <div id='header'>
-      <NavLink to='/' style={link}>
-        <h1 style={{marginLeft:"5px"}}>TommaT</h1>
-      </NavLink>
-      <div style={{display:"flex", position:"absolute", right:"25px"}}>
-        <ul className='header-link'>
-            <NavLink to='/' style={link}><b>Buy</b></NavLink>
-        </ul>
-        <ul className='header-link'>
-            <NavLink to='/new_item' style={link}><b>List an Item</b></NavLink>
-        </ul>
-        {/* <ul className='header-link'>
-            <NavLink to='/self' style={link}><b>Profile</b></NavLink>
-        </ul> */}
-        <ul className='header-link'>
-            <NavLink to='/cart' style={link}><b>Cart</b></NavLink>
-        </ul>
-      
-
-
-
-        {user ? (
-          <NavLink to='/self' style={link}>
-            <Avatar name={userData.username} src={userData.avatar_url}/>
-          </NavLink>
-          ):( 
-        <ul className='header-link'>
-            <NavLink to='/login'style={link}><b>Login</b></NavLink> /
-            <NavLink to='/signup'style={link}><b>Signup</b></NavLink>
-        </ul> 
-        )}
-
+      <div id='header'>
+        <NavLink to='/' style={link}>
+          <h1 style={{marginLeft:"5px"}}>TommaT</h1>
+        </NavLink>
+        <div style={{display:"flex", position:"absolute", right:"25px"}}>
+          <ul className='header-link'>
+              <NavLink to='/' style={link}><b>Buy</b></NavLink>
+          </ul>
+          <ul className='header-link'>
+              <NavLink to='/new_item' style={link}><b>List an Item</b></NavLink>
+          </ul>
+          <ul className='header-link'>
+              <NavLink to='/cart' style={link}><b>Cart</b></NavLink>
+          </ul>
+        
+          {user ? (
+            <NavLink to='/self' style={link}>
+              <Avatar name={userData.username} src={userData.avatar_url}/>
+            </NavLink>
+            ):( 
+            <ul className='header-link'>
+              <NavLink to='/login'style={link}><b>Login</b></NavLink> /
+              <NavLink to='/signup'style={link}><b>Signup</b></NavLink>
+            </ul> 
+          )}
+        </div>
       </div>
-        
-        
-
-
-
-
-    </div>
       
       <Tabs colorScheme="teal">
-
-  
         <TabList>
-          
           <Tab>Categories</Tab>
           <Tab>Search by name</Tab>
           <Tab>Search by tag</Tab>
           {user? (<Button style={{marginLeft: "74%", height:"25px", marginTop:"7px"}} colorScheme='teal'
             onClick={handleLogout}>Logout</Button>
             ) : null}
-
         </TabList>
 
         <TabPanels>
           <TabPanel>
-            {/* <div > */}
               <div style={{display:"flex", marginBottom:"5px"}}>
                 {categoryList}
               </div>
-            {/* </div> */}
           </TabPanel>
           <TabPanel>
             <form onSubmit={handleNameSubmit}>
@@ -196,13 +166,13 @@ function Header({user, userData, handleLogout, handleSearch }) {
           </TabPanel>
           
           <TabPanel>
-            <form onSubmit={handleAddTag}
-            // onClick={handleTagSubmit}
-            >
+            <form onSubmit={handleAddTag}>
+              
+              {/* TAGS INPUT FORM */}
               <label>
                 <div className='tags-input'>
-                <ul id='tags'>
-                  {tagForm.map(tag => {
+                  <ul id='tags'>
+                    {tagForm.map(tag => {
                       return (
                         <li className='tag'>
                           <span className='tag-title' >{tag} </span>
@@ -210,24 +180,19 @@ function Header({user, userData, handleLogout, handleSearch }) {
                         </li>)
                     })}
                   </ul>
-                <input className='tags-input-form' type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
-                {/* <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button> */}
+                  <input className='tags-input-form' type="text" name="searchTag" list="data" value={searchTagForm} onChange={handleSearchTag}></input>
                 </div>
                 <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' onClick={handleAddTag}>Add Tag</Button>
-                
-                
               </label>
-                {/* <Button style={{marginTop: '3px'}} colorScheme='teal' size='sm' type='submit'>Submit</Button> */}
-              
                 <datalist id="data">
                   {tagSuggestions}
                 </datalist>
+           
             </form>
             <Button onClick={handleTagSubmit}  style={{marginTop: '-32px',marginLeft:"100px", display:"flex"}} colorScheme='teal' size='sm' type='submit'><SearchIcon /></Button>
           </TabPanel>
         </TabPanels>
       </Tabs>
-      
     </div>
   )
 }

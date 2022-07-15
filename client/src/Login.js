@@ -30,17 +30,6 @@ function Login({setUser, setUserData}) {
                 .then(json => setHandleError(json.error))
             }
         })
-          
-        // }).then(res => res.json())
-        //   .then(data => {
-        //     setUser(data)
-        //     setUserData(data)
-        //     setForm({
-        //         username: "",
-        //         password: ""
-        //     })
-        //     history.push('/')
-        //   })
     }
 
     function handleChange(e){

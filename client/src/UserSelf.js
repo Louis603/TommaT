@@ -6,10 +6,8 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 
 function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
-    const [rating, setRating] = useState(0)
     const [likeArr, setLikeArr] = useState([])
     
-
     useEffect(() =>{
         fetch(`/likes/${userData.id}`)
             .then(resp => {
@@ -18,19 +16,15 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
                     .then(data => setLikeArr(data))
                 }
             })
-
-            // resp.json())
-            // .then(data => setLikeArr(data))
     },[userData, handleDeleteWish])
 
 
     const soldFilter = userData.items.filter(item => item.sold === true)
     const sellingFilter = userData.items.filter(item => item.sold !== true)
-    // console.log(soldFilter.length)
+
     const selling = sellingFilter.map(item => {
         return (
             <div key={item.id} className="single-item-div"> 
-                
                 <img src={item.images_urls[0]} className='single-item-profile-img'/>
                 <h3>{item.name}</h3>
                 <p>${item.price}</p>
@@ -68,7 +62,6 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
     })
 
     const bought = userData.order_numbers.map(order => {
-        // console.log(order)
         return(
             <div key={order.id} className="single-item-div">
                 <img src={order.images_urls} className='single-item-profile-img'></img>
@@ -111,7 +104,6 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
             <div style={{display:"flex"}}>
                 <h2 className='welcome'>Welcome Back {userData.username}</h2>
             </div>
-            
             <h3>Your Seller Rating</h3>
             
             <div style={{display:"flex"}}>
@@ -142,9 +134,7 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
                         <h2>Latest Review</h2>
                         {userData.latest_review ? <h3>{userData.latest_review}</h3> : <h3>No Reviews</h3>}
                     </div>
-                
                 </div>
-            
             </div>
 
         <Tabs colorScheme="teal">
@@ -159,7 +149,7 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
                 <TabPanel>
                 <div style={{marginLeft: "10%", marginTop:"30px"}}>
                     <h3>Selling</h3>
-                    {sellingFilter.length === 0 ? ( null) : (
+                    {sellingFilter.length === 0 ? <h3>No Items For Sale</h3> : (
                         <div className="user-profile-item">
                             {selling}
                         </div>
@@ -169,7 +159,7 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
                 <TabPanel>
                 <div style={{marginLeft: "10%", marginTop:"30px"}}>
                     <h3>Sold</h3>
-                    {soldFilter.length === 0 ? ( null) : (
+                    {soldFilter.length === 0 ? <h3>No Items Sold</h3> : (
                         <div className="user-profile-item">
                             {sold}
                         </div>
@@ -179,7 +169,7 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
                 <TabPanel>
                 <div style={{marginLeft: "10%", marginTop:"30px"}}>
                     <h3>Bought</h3>
-                    {bought.length === 0 ? ( null) : (
+                    {bought.length === 0 ? <h3>No Items Bought</h3> : (
                         <div className="user-profile-item">
                             {bought}
                         </div>
@@ -200,41 +190,6 @@ function UserSelf({user, userData, handleDelete, handleDeleteWish}) {
 
             </TabPanels>
         </Tabs>
-
-
-
-
-
-
-
-        {/* <div style={{marginLeft: "10%", marginTop:"30px"}}>
-        <h3>SELLING</h3>
-        {sellingFilter.length === 0 ? ( null) : (
-            <div className="user-profile-item">
-                
-                {selling}
-            </div>
-        )}
-        </div> */}
-        
-        {/* {soldFilter.length === 0 ? ( null) : (
-            <div>
-                <h3>SOLD </h3> 
-                {sold}
-            </div>
-        )}
-        
-        {bought.length === 0 ? ( null) : (
-            <div>
-                <h3>BOUGHT</h3> 
-                {bought}
-            </div>
-        )}
-         */}
-        {/* <h3>BOUGHT
-            {bought}
-        </h3> */}
-        
         </div>) 
     : null }
     </div>

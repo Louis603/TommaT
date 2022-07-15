@@ -21,7 +21,6 @@ import {theme} from './Theme';
 function App() {
   const [soldBoolean, setSoldBoolean] = useState(null)
   const [listedItem, setListedItem] = useState(null)
-  // console.log(soldBoolean)
   const [itemsArr, setItemsArr] = useState([]);
   const [searchItemsArr, setSearchItemsArr] = useState([]);
   const [user, setUser] = useState(null)
@@ -30,7 +29,6 @@ function App() {
     order_numbers:[],
     images_urls:[], 
     reviews:[]})
-  // console.log(user.cart)
   let history = useHistory()
 
   useEffect(() => {
@@ -42,7 +40,6 @@ function App() {
           setUser(data)
           setUserData(data)
           console.log(data)
-          // console.log("user check fetch")
         });
       }});
   }, [soldBoolean, listedItem]);
@@ -85,19 +82,16 @@ function App() {
 
   function handleBought(data){
     const boughtItem = itemsArr.filter(item => item.id !== data)
-    console.log(boughtItem)
     setItemsArr(boughtItem)
   }
 
   function handleUpdatedItem(data){
     const updateItem = itemsArr.map(item => item.id === data.id ? data : item )
     setItemsArr(updateItem)
-    console.log(itemsArr)
   }
 
   function handleSearch(data){
     setSearchItemsArr(data)
-    console.log(searchItemsArr)
   }
 
 
@@ -109,7 +103,6 @@ function App() {
     
       <div className="App" >
         <Header user={user} handleLogout={handleLogout} handleSearch={handleSearch} userData={userData}/>
-        {/* {user ? <h2>{user.username}</h2> : <h1>Not logged in</h1>} */}
         <Switch>
           
           <Route path="/login">

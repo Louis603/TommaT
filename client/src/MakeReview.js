@@ -76,7 +76,7 @@ function MakeReview({user, userData}) {
             </form>
           </div>
           <div style={{marginLeft:"100px"}}>
-            {userData.id === singleItem.user_id ? 
+            {/* {userData.id === singleItem.user_id ? 
               <Link to={`/self`}>
                 <h4>SELLER: {singleItem.seller_name}</h4>
               </Link>
@@ -84,11 +84,20 @@ function MakeReview({user, userData}) {
               <Link to={`/user_profile/${singleItem.user_id}`}>
                 <h4>SELLER: {singleItem.seller_name}</h4>
               </Link>
-            }
+            } */}
           </div>
         </div>
         
       } 
+      {userData.id === singleItem.user_id ? 
+        <Link to={`/self`}>
+          <h4>SELLER: {singleItem.seller_name}</h4>
+        </Link>
+        :
+        <Link to={`/user_profile/${singleItem.user_id}`}>
+          <h4>SELLER: {singleItem.seller_name}</h4>
+        </Link>
+      }
     </div>
   )
 }

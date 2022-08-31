@@ -29,3 +29,5 @@
 /config/master.key
 /config/local_env.yml
 /.env
+node_modules
+node_modules
